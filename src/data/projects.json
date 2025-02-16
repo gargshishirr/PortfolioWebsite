@@ -21,14 +21,6 @@
     "description": "A simple pinterest Clone with end to end functionalities",
     "skills": ["Express", "NodeJs","MongoDB","EJS"],
     "demo": "",
-    "source": "https://github.com/TeekshaHarish/teammate-finder"
-  },
-  {
-    "title": "GameZoneX",
-    "imageSrc": "projects/GameZoneX.jpg",
-    "description": "Mini Games Website comprising of games like Snake Game, Tic Tac Toe, Dino Game and a Card game. Features like play with computer or friend, and to choose diffulty are also added.",
-    "skills": ["HTML", "CSS", "JS", "Bootstrap"],
-    "demo": "https://gamezonex.onrender.com/",
-    "source": "https://github.com/TeekshaHarish/GameZone"
+    "source": "https://github.com/gargshishirr/pinterestClone"
   }
 ]
