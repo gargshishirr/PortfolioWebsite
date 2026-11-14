@@ -21,15 +21,8 @@ export const profile = {
   intro:
     "Software engineer at Microsoft building OneLake's access-control APIs. I build backend systems that fail safely, real-time products that feel instant, and tools people enjoy using.",
   about: [
-    "I'm a software engineer at Microsoft on OneLake Security, the access-control layer of Microsoft Fabric. I interned on OneLake in 2024 and came back full-time in 2025. Today I build the APIs that SQL, Kusto, Spark and Power BI call to decide who can see which rows and columns.",
-    "I like the hard, invisible parts of software: hot paths measured in milliseconds, caches that have to be correct, and systems that stay honest when a dependency goes down. Outside work I keep shipping side projects, from a fail-closed ad gate on Kafka and Redis to a multiplayer coding arena and a UPI expense tracker.",
-  ],
-  funFacts: [
-    { icon: "🏸", text: "Badminton captain" },
-    { icon: "📷", text: "Photographer" },
-    { icon: "🎮", text: "Gamer" },
-    { icon: "🎬", text: "Movie buff" },
-    { icon: "🍜", text: "Crazy-level foodie" },
+    "I'm a software engineer at Microsoft on OneLake Security, the access-control layer of Microsoft Fabric. I interned on OneLake in 2024, came back full-time in 2025, and now build the APIs that SQL, Kusto, Spark and Power BI call to decide who can see which rows and columns.",
+    "I like the invisible parts of software: hot paths measured in milliseconds, caches that have to be correct, and systems that stay honest when a dependency goes down. Off the keyboard you'll find me gaming, watching movies or hunting for good food.",
   ],
   socials: [
     {

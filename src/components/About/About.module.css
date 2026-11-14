@@ -93,66 +93,26 @@
   max-width: 62ch;
 }
 
-.facts {
+.achievements {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 8px;
-}
-
-.facts div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: var(--panel);
-}
-
-.facts dt {
-  color: var(--subtle);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.facts dd {
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1.35;
-}
-
-.facts a {
-  text-decoration: none;
-  border-bottom: 1px solid var(--line-strong);
 }
 
 .achievements {
-  display: grid;
-  gap: 10px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
 
 .achievements li {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.025);
+  align-items: baseline;
+  gap: 12px;
 }
 
 .achievementIcon {
-  display: grid;
-  place-items: center;
   flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  font-size: 19px;
+  font-size: 16px;
 }
 
 .achievementTitle {
@@ -163,24 +123,6 @@
   color: var(--muted);
   font-size: 14px;
   line-height: 1.5;
-}
-
-.fun {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.fun li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--muted);
-  font-size: 14px;
 }
 
 @keyframes spin {
@@ -200,7 +142,4 @@
     max-width: 320px;
   }
 
-  .facts {
-    grid-template-columns: 1fr;
-  }
 }

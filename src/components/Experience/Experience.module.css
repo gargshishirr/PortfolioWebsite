@@ -238,13 +238,6 @@
   background: var(--cyan);
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 16px;
-}
-
 .education .marker {
   border-color: var(--pink);
   box-shadow: 0 0 0 5px rgba(255, 154, 183, 0.1), 0 0 18px rgba(255, 154, 183, 0.6);

@@ -33,9 +33,7 @@ export function Contact() {
             <br />
             <span className="gradient-text">that doesn&apos;t fall over.</span>
           </h2>
-          <p className={styles.lead}>
-            Have a role, a project or a hard problem in mind? My inbox is open.
-          </p>
+          <p className={styles.lead}>Have a role or a hard problem in mind? My inbox is open.</p>
 
           <div className={styles.emailRow}>
             <a className="button button-primary" href={`mailto:${profile.email}`}>
@@ -53,17 +51,13 @@ export function Contact() {
             {profile.socials.map((social) => (
               <li key={social.label}>
                 <a href={social.href} target="_blank" rel="noreferrer">
-                  <span>{social.label}</span>
-                  <span className={styles.handle}>{social.handle}</span>
-                  <span aria-hidden="true">↗</span>
+                  {social.label}
                 </a>
               </li>
             ))}
             <li>
               <a href={profile.resume} target="_blank" rel="noreferrer">
-                <span>Resume</span>
-                <span className={styles.handle}>Google Drive</span>
-                <span aria-hidden="true">↗</span>
+                Resume
               </a>
             </li>
           </ul>
@@ -72,10 +66,9 @@ export function Contact() {
 
       <footer className={`page ${styles.footer}`}>
         <p>© {new Date().getFullYear()} {profile.name}</p>
-        <p className={styles.footerHint}>
-          Psst. Press <kbd>~</kbd> for the terminal, or try <code>sudo hire-me</code>.
+        <p>
+          Psst, press <kbd>~</kbd>
         </p>
-        <p>Built with React & Vite</p>
       </footer>
     </section>
   );

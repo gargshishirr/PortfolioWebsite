@@ -115,39 +115,6 @@
   color: var(--subtle);
 }
 
-.latency {
-  display: grid;
-  gap: 8px;
-}
-
-.latencyHead {
-  display: flex;
-  justify-content: space-between;
-  color: var(--subtle);
-  font-size: 10.5px;
-}
-
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 46px;
-}
-
-.bars span {
-  flex: 1;
-  border-radius: 3px 3px 0 0;
-  background: linear-gradient(180deg, var(--cyan), rgba(95, 231, 240, 0.2));
-  opacity: 0.75;
-  transform-origin: bottom;
-  animation: grow 1.2s var(--ease-out) both;
-  animation-delay: calc(var(--i) * 30ms);
-}
-
-.bars .spike {
-  background: linear-gradient(180deg, var(--pink), rgba(255, 154, 183, 0.2));
-}
-
 @keyframes packet {
   0% {
     left: 12.5%;
@@ -169,12 +136,6 @@
   from {
     opacity: 0;
     transform: translateY(-8px);
-  }
-}
-
-@keyframes grow {
-  from {
-    transform: scaleY(0);
   }
 }
 

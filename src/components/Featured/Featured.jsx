@@ -69,7 +69,6 @@ const FEATURES = [
         url="localhost:3000/room · Friday night DSA"
       />
     ),
-    note: "Real battle, recorded locally with three demo players",
   },
   {
     slug: "medrecords",
@@ -82,36 +81,18 @@ const FEATURES = [
       />
     ),
   },
-  {
-    slug: "wanderly",
-    layout: "full",
-    reverse: true,
-    media: (
-      <BrowserAndPhone
-        desktop={projectBySlug.wanderly.images[0]}
-        phone={projectBySlug.wanderly.images[1]}
-        url="wanderly-fna8.onrender.com"
-      />
-    ),
-  },
 ];
 
 export function Featured() {
   const { openProject } = useUI();
 
   return (
-    <section className="section" id="work" aria-labelledby="work-title">
-      <div className="page">
+    <div className="page">
         <Reveal className="section-head">
-          <p className="eyebrow">Flagship missions</p>
+          <p className="eyebrow">Selected work</p>
           <h2 id="work-title" className="section-title">
-            Selected work, <span className="gradient-text">built to hold up.</span>
+            Things I&apos;ve built, <span className="gradient-text">built to hold up.</span>
           </h2>
-          <p className="section-lead">
-            Five side projects I&apos;m proudest of: a millisecond-budget backend,
-            a multiplayer coding arena, a family health hub, a travel-matching
-            app and a mobile app for everyday money.
-          </p>
         </Reveal>
 
         <div className={styles.bento}>
@@ -123,15 +104,13 @@ export function Featured() {
                 as="article"
                 key={project.slug}
                 delay={index * 80}
-                className={`${styles.card} ${styles[feature.layout]} ${feature.reverse ? styles.reverse : ""}`}
+                className={`${styles.card} ${styles[feature.layout]}`}
                 style={{ "--accent": category.color }}
                 onPointerMove={trackSpotlight}
               >
                 <div className={styles.copy}>
                   <p className={styles.meta}>
-                    <span className={styles.index}>0{index + 1}</span>
-                    <span className={styles.category}>{category.label}</span>
-                    <span>{project.year}</span>
+                    {category.label} · {project.year}
                   </p>
                   <h3 className={styles.title}>
                     <button
@@ -144,28 +123,9 @@ export function Featured() {
                   </h3>
                   <p className={styles.tagline}>{project.tagline}</p>
 
-                  {project.metrics.length > 0 && (
-                    <dl className={styles.metrics}>
-                      {project.metrics.slice(0, feature.layout === "full" ? 3 : 2).map((metric) => (
-                        <div key={metric.label}>
-                          <dt>{metric.label}</dt>
-                          <dd>{metric.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  )}
-
-                  <ul className={styles.stack} aria-label="Tech stack">
-                    {project.stack.slice(0, 5).map((item) => (
-                      <li key={item} className="chip">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
                   <div className={styles.actions}>
                     <span className={styles.open} aria-hidden="true">
-                      Open dossier <span>→</span>
+                      View project <span>→</span>
                     </span>
                     {project.links.live && (
                       <a
@@ -176,19 +136,6 @@ export function Featured() {
                       >
                         Live demo ↗
                       </a>
-                    )}
-                    {project.links.source && (
-                      <a
-                        className={styles.raised}
-                        href={project.links.source}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Source ↗
-                      </a>
-                    )}
-                    {project.visibility === "private" && (
-                      <span className={styles.private}>Private repo</span>
                     )}
                   </div>
                 </div>
@@ -201,7 +148,6 @@ export function Featured() {
             );
           })}
         </div>
-      </div>
-    </section>
+    </div>
   );
 }

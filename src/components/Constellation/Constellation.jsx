@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 
 import { useUI } from "../../context/ui";
 import { categories, categoryById, projectBySlug, projects } from "../../data/projects";
-import { allStackItems } from "../../data/skills";
 import { useMediaQuery } from "../../hooks/hooks";
 import { ProjectArt } from "../common/ProjectArt";
 import { Reveal } from "../common/Reveal";
@@ -36,9 +35,6 @@ function StarMap({ visible, onOpen }) {
               <g key={category.id} className={styles.constellationLabel}>
                 <text x={x} y={y} fill={category.color}>
                   {category.constellation.toUpperCase()}
-                </text>
-                <text x={x} y={y + 18} className={styles.subLabel}>
-                  {category.label}
                 </text>
               </g>
             );
@@ -162,7 +158,6 @@ function ProjectGrid({ items, onOpen }) {
               )}
               <span className={styles.badges}>
                 {project.links.live && <span className={styles.live}>● Live</span>}
-                {project.visibility === "private" && <span>Private</span>}
               </span>
             </div>
             <div className={styles.cardBody}>
@@ -176,13 +171,6 @@ function ProjectGrid({ items, onOpen }) {
                 </button>
               </h3>
               <p className={styles.cardTagline}>{project.tagline}</p>
-              <ul className={styles.cardStack} aria-label="Tech stack">
-                {project.stack.slice(0, 4).map((item) => (
-                  <li key={item} className="chip">
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </div>
           </li>
         );
@@ -195,108 +183,72 @@ export function Constellation() {
   const { filter, setFilter, openProject } = useUI();
   const wide = useMediaQuery("(min-width: 760px)");
   const [viewChoice, setViewChoice] = useState(null);
-  const view = viewChoice ?? (wide ? "map" : "list");
+  const view = wide ? viewChoice ?? "map" : "list";
 
   const filtered = useMemo(() => projects.filter((project) => matches(project, filter)), [filter]);
   const visible = useMemo(() => new Set(filtered.map((project) => project.slug)), [filtered]);
 
-  const categoryCount = (id) => projects.filter((project) => project.category === id).length;
-
   return (
-    <section className="section" id="projects" aria-labelledby="projects-title">
-      <div className="page">
-        <Reveal className="section-head">
-          <p className="eyebrow">The constellation</p>
-          <h2 id="projects-title" className="section-title">
-            Every project, <span className="gradient-text">mapped like a night sky.</span>
-          </h2>
-          <p className="section-lead">
-            All {projects.length} projects, grouped into four constellations by what
-            they do. Hover a star to preview it, click to open its dossier, or
-            filter by the tech you care about.
-          </p>
-        </Reveal>
-
-        <Reveal className={styles.controls}>
-          <div className={styles.chips} role="group" aria-label="Filter by category">
+    <div className={`page ${styles.block}`} id="projects">
+      <Reveal className={styles.head}>
+        <div>
+          <h3 className={styles.heading}>All {projects.length} projects, mapped as a constellation</h3>
+          <p className={styles.sub}>Open any project for screenshots and details.</p>
+        </div>
+        <div className={styles.viewToggle} role="group" aria-label="View">
+          {["map", "list"].map((option) => (
             <button
+              key={option}
               type="button"
-              className={styles.filterChip}
-              aria-pressed={filter.type === "all"}
-              onClick={() => setFilter({ type: "all", value: null })}
+              aria-pressed={view === option}
+              onClick={() => setViewChoice(option)}
             >
-              All <span>{projects.length}</span>
+              {option === "map" ? "Map" : "List"}
             </button>
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                type="button"
-                className={styles.filterChip}
-                style={{ "--accent": category.color }}
-                aria-pressed={filter.type === "category" && filter.value === category.id}
-                onClick={() =>
-                  setFilter(
-                    filter.type === "category" && filter.value === category.id
-                      ? { type: "all", value: null }
-                      : { type: "category", value: category.id },
-                  )
-                }
-              >
-                <i aria-hidden="true" />
-                {category.label} <span>{categoryCount(category.id)}</span>
-              </button>
-            ))}
-          </div>
+          ))}
+        </div>
+      </Reveal>
 
-          <div className={styles.toolsRow}>
-            <label className={styles.select}>
-              <span className="visually-hidden">Filter by technology</span>
-              <select
-                value={filter.type === "skill" ? filter.value : ""}
-                onChange={(event) =>
-                  setFilter(
-                    event.target.value
-                      ? { type: "skill", value: event.target.value }
-                      : { type: "all", value: null },
-                  )
-                }
-              >
-                <option value="">Any technology</option>
-                {allStackItems.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
+      <div className={styles.chips} role="group" aria-label="Filter by category">
+        <button
+          type="button"
+          className={styles.filterChip}
+          aria-pressed={filter.type === "all"}
+          onClick={() => setFilter({ type: "all", value: null })}
+        >
+          All
+        </button>
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            type="button"
+            className={styles.filterChip}
+            style={{ "--accent": category.color }}
+            aria-pressed={filter.type === "category" && filter.value === category.id}
+            onClick={() =>
+              setFilter(
+                filter.type === "category" && filter.value === category.id
+                  ? { type: "all", value: null }
+                  : { type: "category", value: category.id },
+              )
+            }
+          >
+            <i aria-hidden="true" />
+            {category.label}
+          </button>
+        ))}
+      </div>
 
-            <div className={styles.viewToggle} role="group" aria-label="View">
-              {["map", "list"].map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  aria-pressed={view === option}
-                  onClick={() => setViewChoice(option)}
-                >
-                  {option === "map" ? "✦ Sky map" : "▤ List"}
-                </button>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-
-        <p className={styles.status} aria-live="polite">
-          {filter.type === "all"
-            ? `Showing all ${projects.length} projects`
-            : `Showing ${filtered.length} of ${projects.length} projects · ${
-                filter.type === "skill" ? filter.value : categoryById[filter.value].label
-              }`}
-          {filter.type !== "all" && (
+      <p className={styles.status} aria-live="polite">
+        {filter.type === "skill" && (
+          <>
+            {filtered.length} of {projects.length} projects use {filter.value}
             <button type="button" onClick={() => setFilter({ type: "all", value: null })}>
-              Clear filter ×
+              Clear ×
             </button>
-          )}
-        </p>
+          </>
+        )}
+      </p>
 
         {view === "map" ? (
           <Reveal>
@@ -305,7 +257,6 @@ export function Constellation() {
         ) : (
           <ProjectGrid items={filtered} onOpen={openProject} />
         )}
-      </div>
-    </section>
+    </div>
   );
 }
