@@ -11,7 +11,6 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { ProjectDrawer } from "./components/ProjectDrawer/ProjectDrawer";
 import { Starfield } from "./components/Starfield/Starfield";
 import { Terminal } from "./components/Terminal/Terminal";
-import { Toolbox } from "./components/Toolbox/Toolbox";
 import { UIContext, scrollToSection } from "./context/ui";
 import { projectBySlug } from "./data/projects";
 
@@ -108,10 +107,11 @@ function App() {
       <Navbar />
       <main id="main">
         <Hero />
-        <Featured />
-        <Constellation />
+        <section className="section" id="work" aria-labelledby="work-title">
+          <Featured />
+          <Constellation />
+        </section>
         <Experience />
-        <Toolbox />
         <About />
         <Contact />
       </main>

@@ -7,7 +7,7 @@ import styles from "./Navbar.module.css";
 const ids = sections.map((section) => section.id);
 
 export function Navbar() {
-  const { openPalette, openTerminal } = useUI();
+  const { openPalette } = useUI();
   const active = useActiveSection(ids);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -87,15 +87,6 @@ export function Navbar() {
               <kbd>⌘</kbd>
               <kbd>K</kbd>
             </span>
-          </button>
-          <button
-            type="button"
-            className={styles.terminal}
-            onClick={openTerminal}
-            aria-label="Open terminal"
-            title="Open terminal (~)"
-          >
-            <span aria-hidden="true">&gt;_</span>
           </button>
         </div>
       </nav>

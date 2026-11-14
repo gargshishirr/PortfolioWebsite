@@ -1,9 +1,27 @@
-.controls {
+.block {
+  margin-top: clamp(96px, 12vw, 150px);
+}
+
+.head {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 14px;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.sub {
+  margin-top: 6px;
+  color: var(--muted);
 }
 
 .chips {
@@ -39,12 +57,6 @@
   box-shadow: 0 0 10px var(--accent);
 }
 
-.filterChip span {
-  color: var(--subtle);
-  font-family: var(--font-mono);
-  font-size: 12px;
-}
-
 .filterChip:hover {
   color: var(--text);
   border-color: var(--line-strong);
@@ -54,30 +66,6 @@
   color: var(--text);
   border-color: color-mix(in srgb, var(--accent) 55%, transparent);
   background: color-mix(in srgb, var(--accent) 12%, transparent);
-}
-
-.toolsRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.select select {
-  min-height: 40px;
-  padding: 0 38px 0 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23a3aec8' stroke-width='1.6'/%3E%3C/svg%3E")
-      no-repeat right 14px center,
-    rgba(255, 255, 255, 0.03);
-  color: var(--text);
-  font-size: 14px;
-  appearance: none;
-}
-
-.select option {
-  background: var(--panel-solid);
 }
 
 .viewToggle {
@@ -109,7 +97,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin: 18px 0 16px;
+  min-height: 16px;
+  margin: 14px 0 12px;
   color: var(--subtle);
   font-family: var(--font-mono);
   font-size: 12.5px;
@@ -159,13 +148,6 @@
   font-family: var(--font-mono);
   font-size: 13px;
   letter-spacing: 0.22em;
-}
-
-.constellationLabel .subLabel {
-  fill: var(--subtle);
-  font-family: var(--font-body);
-  font-size: 12px;
-  letter-spacing: 0;
 }
 
 .edge {
@@ -497,14 +479,6 @@
   line-height: 1.5;
 }
 
-.cardStack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: auto;
-  padding-top: 8px;
-}
-
 .empty {
   padding: 48px;
   border-radius: var(--radius);
@@ -535,5 +509,31 @@
 @media (prefers-reduced-motion: reduce) {
   .edge {
     stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 759px) {
+  .viewToggle {
+    display: none;
+  }
+
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: -24px;
+    padding: 2px 24px 6px;
+    scrollbar-width: none;
+  }
+
+  .chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filterChip {
+    flex: 0 0 auto;
+  }
+
+  .cover {
+    aspect-ratio: 2 / 1;
   }
 }

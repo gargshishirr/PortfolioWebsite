@@ -1,5 +1,3 @@
-import { projects } from "./projects";
-
 const groups = [
   {
     title: "Languages",
@@ -39,17 +37,7 @@ const groups = [
   },
 ];
 
-export const projectsUsing = (skill) =>
-  projects.filter((project) => project.stack.includes(skill));
-
 export const skillGroups = groups.map((group) => ({
   ...group,
-  skills: group.skills.map((name) => ({
-    name,
-    count: projectsUsing(name).length,
-  })),
+  skills: group.skills.map((name) => ({ name })),
 }));
-
-export const allStackItems = [
-  ...new Set(projects.flatMap((project) => project.stack)),
-].sort((a, b) => a.localeCompare(b));

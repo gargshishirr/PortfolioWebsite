@@ -15,7 +15,6 @@ const DECISIONS = [
   { verdict: "TRAFFIC_RATE_EXCEEDED", ok: false, ms: "2.8" },
 ];
 
-const BARS = [18, 22, 20, 26, 21, 19, 24, 30, 22, 20, 23, 27, 21, 19, 22, 25, 20, 64, 22, 21, 24, 20, 23, 22];
 
 export function AdGateVisual() {
   const reduceMotion = useReducedMotion();
@@ -54,21 +53,6 @@ export function AdGateVisual() {
         ))}
       </ol>
 
-      <div className={styles.latency}>
-        <div className={styles.latencyHead}>
-          <span>p99 latency</span>
-          <span>circuit open → fail closed</span>
-        </div>
-        <div className={styles.bars}>
-          {BARS.map((height, index) => (
-            <span
-              key={index}
-              style={{ height: `${height}%`, "--i": index }}
-              className={height > 50 ? styles.spike : undefined}
-            />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

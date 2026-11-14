@@ -9,14 +9,11 @@ const ORBITS = [
 ];
 
 const BODIES = [
-  { label: "Java", orbit: 0, phase: 0 },
-  { label: "Kafka", orbit: 0, phase: 2.1 },
-  { label: "Redis", orbit: 0, phase: 4.2 },
-  { label: "React", orbit: 1, phase: 1 },
-  { label: "TypeScript", orbit: 1, phase: 3.1 },
-  { label: "Node.js", orbit: 1, phase: 5.2 },
-  { label: "Python", orbit: 2, phase: 0.6 },
-  { label: "C++", orbit: 2, phase: 3.7 },
+  { orbit: 0, phase: 0 },
+  { orbit: 0, phase: 3.3 },
+  { orbit: 1, phase: 1.2 },
+  { orbit: 1, phase: 4.4 },
+  { orbit: 2, phase: 2.4 },
 ];
 
 const position = (orbit, angle) => {
@@ -142,7 +139,7 @@ export const OrbitSystem = memo(function OrbitSystem() {
             const start = position(ORBITS[body.orbit], body.phase);
             return (
               <g
-                key={body.label}
+                key={`${body.orbit}-${body.phase}`}
                 ref={(node) => {
                   bodyRefs.current[index] = node;
                 }}
@@ -151,9 +148,6 @@ export const OrbitSystem = memo(function OrbitSystem() {
                 <circle r="16" fill={color} opacity="0.18" />
                 <circle r="6.5" fill={color} />
                 <circle r="2" cx="-2" cy="-2" fill="#fff" opacity="0.9" />
-                <text className={styles.bodyLabel} x="14" y="-12">
-                  {body.label}
-                </text>
               </g>
             );
           })}

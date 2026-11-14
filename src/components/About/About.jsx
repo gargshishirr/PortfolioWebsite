@@ -26,32 +26,13 @@ export function About() {
         <Reveal delay={100} className={styles.copy}>
           <p className="eyebrow">About</p>
           <h2 id="about-title" className="section-title">
-            Hi, I&apos;m {profile.firstName}. <span className="gradient-text">Nice to meet you.</span>
+            Hi, I&apos;m {profile.firstName}.
           </h2>
           {profile.about.map((paragraph) => (
             <p key={paragraph} className={styles.paragraph}>
               {paragraph}
             </p>
           ))}
-
-          <dl className={styles.facts}>
-            <div>
-              <dt>Working at</dt>
-              <dd>
-                {profile.company} · {profile.team}
-              </dd>
-            </div>
-            <div>
-              <dt>Studied</dt>
-              <dd>
-                {profile.education.short} · {profile.education.grade}
-              </dd>
-            </div>
-            <div>
-              <dt>Based in</dt>
-              <dd>{profile.location}</dd>
-            </div>
-          </dl>
 
           <ul className={styles.achievements} aria-label="Achievements and leadership">
             {achievements.map((item) => (
@@ -67,14 +48,6 @@ export function About() {
             ))}
           </ul>
 
-          <ul className={styles.fun} aria-label="Fun facts">
-            {profile.funFacts.map((fact) => (
-              <li key={fact.text}>
-                <span aria-hidden="true">{fact.icon}</span>
-                {fact.text}
-              </li>
-            ))}
-          </ul>
         </Reveal>
       </div>
     </section>

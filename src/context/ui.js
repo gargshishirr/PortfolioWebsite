@@ -10,9 +10,7 @@ export function useUI() {
 
 export const sections = [
   { id: "work", label: "Work" },
-  { id: "projects", label: "Constellation" },
   { id: "experience", label: "Experience" },
-  { id: "toolbox", label: "Toolbox" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];

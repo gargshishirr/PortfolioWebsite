@@ -5,12 +5,12 @@ import { profile } from "../../data/profile";
 import { Reveal } from "../common/Reveal";
 import styles from "./Experience.module.css";
 
-const COLLAPSED_POINTS = 3;
-
 function Role({ item }) {
   const [expanded, setExpanded] = useState(false);
-  const extra = item.points.length - COLLAPSED_POINTS;
-  const points = expanded || extra <= 0 ? item.points : item.points.slice(0, COLLAPSED_POINTS);
+  // Roles with a summary hide every bullet until expanded; the others lead with their first bullet.
+  const collapsedCount = item.summary ? 0 : 1;
+  const extra = item.points.length - collapsedCount;
+  const points = expanded || extra <= 0 ? item.points : item.points.slice(0, collapsedCount);
   const listId = `points-${item.organisation}-${item.start}`.replace(/\W+/g, "-");
 
   return (
@@ -46,7 +46,7 @@ function Role({ item }) {
         </dl>
       )}
 
-      <ul id={listId} className={styles.points}>
+      <ul id={listId} className={styles.points} hidden={points.length === 0}>
         {points.map((point) => (
           <li key={point}>{point}</li>
         ))}
@@ -60,19 +60,13 @@ function Role({ item }) {
           aria-controls={listId}
           onClick={() => setExpanded((value) => !value)}
         >
-          {expanded ? "Show less" : `Show ${extra} more`}
+          {expanded ? "Show less" : item.summary ? "What I worked on" : "More"}
+          <span aria-hidden="true">{expanded ? " ↑" : " ↓"}</span>
         </button>
       )}
 
       {item.note && <p className={styles.note}>↪ {item.note}</p>}
 
-      <ul className={styles.tags} aria-label="Skills used">
-        {item.tags.map((tag) => (
-          <li key={tag} className="chip">
-            {tag}
-          </li>
-        ))}
-      </ul>
     </article>
   );
 }
