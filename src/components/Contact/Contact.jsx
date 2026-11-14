@@ -1,33 +1,82 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 
+import { profile } from "../../data/profile";
+import { Reveal } from "../common/Reveal";
 import styles from "./Contact.module.css";
-import { getImageUrl } from '../../utils';
 
-export const Contact = () => {
+export function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return undefined;
+    const timer = setTimeout(() => setCopied(false), 2200);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
+
   return (
-    <footer className={styles.container} id="contact">
-        <div className={styles.text}>
-            <h2>Contact</h2>
-            <p>Feel free to reach out!</p>
-        </div>
-        <ul className={styles.links}>
-            <li className={styles.link}>
-                <img src={getImageUrl("contact/emailIcon.png")} alt="email icon" />
-                <a href="mailto:gargshishirr@gmail.com">gargshishirr@gmail.com</a>
+    <section className="section" id="contact" aria-labelledby="contact-title">
+      <div className="page">
+        <Reveal className={styles.panel}>
+          <div className={styles.glow} aria-hidden="true" />
+          <p className="eyebrow">Open channel</p>
+          <h2 id="contact-title" className={styles.title}>
+            Let&apos;s build something
+            <br />
+            <span className="gradient-text">that doesn&apos;t fall over.</span>
+          </h2>
+          <p className={styles.lead}>
+            Have a role, a project or a hard problem in mind? My inbox is open.
+          </p>
+
+          <div className={styles.emailRow}>
+            <a className="button button-primary" href={`mailto:${profile.email}`}>
+              {profile.email}
+            </a>
+            <button type="button" className="button" onClick={copyEmail}>
+              {copied ? "Copied ✓" : "Copy email"}
+            </button>
+            <span className="visually-hidden" aria-live="polite">
+              {copied ? "Email address copied to clipboard" : ""}
+            </span>
+          </div>
+
+          <ul className={styles.socials}>
+            {profile.socials.map((social) => (
+              <li key={social.label}>
+                <a href={social.href} target="_blank" rel="noreferrer">
+                  <span>{social.label}</span>
+                  <span className={styles.handle}>{social.handle}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={profile.resume} target="_blank" rel="noreferrer">
+                <span>Resume</span>
+                <span className={styles.handle}>Google Drive</span>
+                <span aria-hidden="true">↗</span>
+              </a>
             </li>
-            <li className={styles.link}>
-                <img src={getImageUrl("contact/linkedinIcon.png")} alt="LinkedIn icon" />
-                <a href="https://www.linkedin.com/in/shishir-garg-86a308209/">www.linkedin.com/in/shishir-garg-86a308209/</a>
-            </li>
-            <li className={styles.link}>
-                <img src={getImageUrl("contact/githubIcon.png")} alt="email icon" />
-                <a href="https://github.com/gargshishirr">github.com/gargshishirr</a>
-            </li>
-            <li className={styles.link}>
-                <img src={getImageUrl("contact/leetcode.png")} alt="leetcode icon" />
-                <a href="https://leetcode.com/Hawkeye101">leetcode.com/Hawkeye101</a>
-            </li>
-        </ul>
-    </footer>
-  )
+          </ul>
+        </Reveal>
+      </div>
+
+      <footer className={`page ${styles.footer}`}>
+        <p>© {new Date().getFullYear()} {profile.name}</p>
+        <p className={styles.footerHint}>
+          Psst. Press <kbd>~</kbd> for the terminal, or try <code>sudo hire-me</code>.
+        </p>
+        <p>Built with React & Vite</p>
+      </footer>
+    </section>
+  );
 }
