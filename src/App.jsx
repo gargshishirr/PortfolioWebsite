@@ -1,22 +1,128 @@
-import styles from "./App.module.css";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
 import { About } from "./components/About/About";
+import { CommandPalette } from "./components/CommandPalette/CommandPalette";
+import { Constellation } from "./components/Constellation/Constellation";
 import { Contact } from "./components/Contact/Contact";
 import { Experience } from "./components/Experience/Experience";
+import { Featured } from "./components/Featured/Featured";
 import { Hero } from "./components/Hero/Hero";
 import { Navbar } from "./components/Navbar/Navbar";
-import { Projects } from "./components/Projects/Projects";
+import { ProjectDrawer } from "./components/ProjectDrawer/ProjectDrawer";
+import { Starfield } from "./components/Starfield/Starfield";
+import { Terminal } from "./components/Terminal/Terminal";
+import { Toolbox } from "./components/Toolbox/Toolbox";
+import { UIContext, scrollToSection } from "./context/ui";
+import { projectBySlug } from "./data/projects";
+
+const readProjectFromUrl = () => {
+  const slug = new URLSearchParams(window.location.search).get("project");
+  return slug && projectBySlug[slug] ? slug : null;
+};
+
+const writeProjectToUrl = (slug) => {
+  const url = new URL(window.location.href);
+  if (slug) url.searchParams.set("project", slug);
+  else url.searchParams.delete("project");
+  window.history.replaceState(null, "", url);
+};
+
+const isTypingTarget = (element) =>
+  element instanceof HTMLElement &&
+  (element.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(element.tagName));
+
 function App() {
+  const [activeSlug, setActiveSlug] = useState(readProjectFromUrl);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+  const [filter, setFilter] = useState({ type: "all", value: null });
+
+  const openProject = useCallback((slug) => {
+    if (!projectBySlug[slug]) return;
+    setPaletteOpen(false);
+    setTerminalOpen(false);
+    setActiveSlug(slug);
+    writeProjectToUrl(slug);
+  }, []);
+
+  const closeProject = useCallback(() => {
+    setActiveSlug(null);
+    writeProjectToUrl(null);
+  }, []);
+
+  const focusSkill = useCallback((skill) => {
+    setActiveSlug(null);
+    writeProjectToUrl(null);
+    setFilter({ type: "skill", value: skill });
+    requestAnimationFrame(() => scrollToSection("projects"));
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setTerminalOpen(false);
+        setPaletteOpen((open) => !open);
+        return;
+      }
+      if (
+        (event.key === "`" || event.key === "~") &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.altKey &&
+        !isTypingTarget(event.target) &&
+        !document.querySelector("dialog[open]")
+      ) {
+        event.preventDefault();
+        setTerminalOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  const ui = useMemo(
+    () => ({
+      openProject,
+      focusSkill,
+      filter,
+      setFilter,
+      openPalette: () => {
+        setTerminalOpen(false);
+        setPaletteOpen(true);
+      },
+      openTerminal: () => {
+        setPaletteOpen(false);
+        setTerminalOpen(true);
+      },
+    }),
+    [openProject, focusSkill, filter],
+  );
+
   return (
-    <>
-      <div className={styles.App}>
-        <Navbar />
+    <UIContext.Provider value={ui}>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Starfield />
+      <Navbar />
+      <main id="main">
         <Hero />
-        <About />
+        <Featured />
+        <Constellation />
         <Experience />
-        <Projects />
+        <Toolbox />
+        <About />
         <Contact />
-      </div>
-    </>
+      </main>
+      <ProjectDrawer
+        slug={activeSlug}
+        onClose={closeProject}
+        onNavigate={openProject}
+      />
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <Terminal open={terminalOpen} onClose={() => setTerminalOpen(false)} />
+    </UIContext.Provider>
   );
 }
 
