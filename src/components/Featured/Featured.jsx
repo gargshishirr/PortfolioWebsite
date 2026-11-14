@@ -1,8 +1,8 @@
 import { useUI } from "../../context/ui";
+import codebattleFocus from "../../assets/projects/codebattle-focus.webp";
 import { categoryById, projectBySlug } from "../../data/projects";
 import { Reveal } from "../common/Reveal";
 import { AdGateVisual } from "../visuals/AdGateVisual";
-import { CodeBattleVisual } from "../visuals/CodeBattleVisual";
 import styles from "./Featured.module.css";
 
 const trackSpotlight = (event) => {
@@ -23,18 +23,24 @@ function PhoneStack({ images }) {
   );
 }
 
-function BrowserAndPhone({ desktop, phone }) {
+function Browser({ image, url }) {
+  return (
+    <figure className={styles.browser}>
+      <div className={styles.browserBar} aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <span>{url}</span>
+      </div>
+      <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+    </figure>
+  );
+}
+
+function BrowserAndPhone({ desktop, phone, url }) {
   return (
     <div className={styles.devices}>
-      <figure className={styles.browser}>
-        <div className={styles.browserBar} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <span>wanderly-fna8.onrender.com</span>
-        </div>
-        <img src={desktop.src} alt={desktop.alt} loading="lazy" decoding="async" />
-      </figure>
+      <Browser image={desktop} url={url} />
       <figure className={`${styles.phone} ${styles.floatingPhone}`}>
         <img src={phone.src} alt={phone.alt} loading="lazy" decoding="async" />
       </figure>
@@ -57,16 +63,34 @@ const FEATURES = [
   {
     slug: "codebattle",
     layout: "wide",
-    media: <CodeBattleVisual />,
-    note: "Illustration of a live battle",
+    media: (
+      <Browser
+        image={{ src: codebattleFocus, alt: projectBySlug.codebattle.images[0].alt }}
+        url="localhost:3000/room · Friday night DSA"
+      />
+    ),
+    note: "Real battle, recorded locally with three demo players",
+  },
+  {
+    slug: "medrecords",
+    layout: "full",
+    media: (
+      <BrowserAndPhone
+        desktop={projectBySlug.medrecords.images[0]}
+        phone={projectBySlug.medrecords.images[4]}
+        url="gargshishirr.github.io/MedRecords"
+      />
+    ),
   },
   {
     slug: "wanderly",
     layout: "full",
+    reverse: true,
     media: (
       <BrowserAndPhone
         desktop={projectBySlug.wanderly.images[0]}
         phone={projectBySlug.wanderly.images[1]}
+        url="wanderly-fna8.onrender.com"
       />
     ),
   },
@@ -84,9 +108,9 @@ export function Featured() {
             Selected work, <span className="gradient-text">built to hold up.</span>
           </h2>
           <p className="section-lead">
-            Four projects I&apos;m proudest of: a millisecond-budget backend, a
-            multiplayer coding arena, a travel-matching app and a mobile app for
-            everyday money.
+            Five side projects I&apos;m proudest of: a millisecond-budget backend,
+            a multiplayer coding arena, a family health hub, a travel-matching
+            app and a mobile app for everyday money.
           </p>
         </Reveal>
 
@@ -99,7 +123,7 @@ export function Featured() {
                 as="article"
                 key={project.slug}
                 delay={index * 80}
-                className={`${styles.card} ${styles[feature.layout]}`}
+                className={`${styles.card} ${styles[feature.layout]} ${feature.reverse ? styles.reverse : ""}`}
                 style={{ "--accent": category.color }}
                 onPointerMove={trackSpotlight}
               >

@@ -109,16 +109,30 @@ export function Terminal({ open, onClose }) {
           role="presentation"
         >
           <div role="log" aria-live="polite" aria-label="Terminal output">
-            {lines.map((segments, index) => (
-              <p key={index} className={styles.line}>
-                {segments.map((segment, segmentIndex) => (
-                  <span key={segmentIndex} className={segment.tone ? styles[segment.tone] : undefined}>
-                    {segment.text}
-                  </span>
-                ))}
-                {!segments.length && " "}
-              </p>
-            ))}
+            {lines.map((line, index) =>
+              Array.isArray(line) ? (
+                <p key={index} className={styles.line}>
+                  {line.map((segment, segmentIndex) => (
+                    <span key={segmentIndex} className={segment.tone ? styles[segment.tone] : undefined}>
+                      {segment.text}
+                    </span>
+                  ))}
+                  {!line.length && " "}
+                </p>
+              ) : (
+                <p
+                  key={index}
+                  className={`${styles.row} ${styles.indent}`}
+                  style={{ gridTemplateColumns: line.columns }}
+                >
+                  {line.cells.map((cell, cellIndex) => (
+                    <span key={cellIndex} className={cell.tone ? styles[cell.tone] : undefined}>
+                      {cell.text}
+                    </span>
+                  ))}
+                </p>
+              ),
+            )}
           </div>
 
           <form

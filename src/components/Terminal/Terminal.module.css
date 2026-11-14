@@ -70,6 +70,7 @@
 }
 
 .output {
+  position: relative;
   flex: 1;
   overflow-y: auto;
   padding: 16px 18px 24px;
@@ -83,6 +84,22 @@
   word-break: break-word;
   color: #d8e2ef;
   min-height: 1.6em;
+}
+
+.row {
+  display: grid;
+  column-gap: 2ch;
+  color: #d8e2ef;
+  min-height: 1.6em;
+}
+
+.row > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.indent {
+  padding-left: 2ch;
 }
 
 .inputLine {
@@ -144,6 +161,17 @@
 }
 
 @media (max-width: 560px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .row > span:last-child {
+    flex-basis: 100%;
+    padding-left: 2ch;
+    color: #8592ad;
+  }
+
   .output {
     font-size: 12px;
     padding: 12px;

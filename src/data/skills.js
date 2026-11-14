@@ -3,11 +3,13 @@ import { projects } from "./projects";
 const groups = [
   {
     title: "Languages",
-    skills: ["Java", "TypeScript", "JavaScript", "Python", "C++", "C#", "Kotlin"],
+    skills: ["C#", "Java", "TypeScript", "JavaScript", "Python", "C++", "C", "SQL", "KQL", "Kotlin"],
   },
   {
-    title: "Backend & data",
+    title: "Backend & distributed systems",
     skills: [
+      ".NET 8",
+      "ASP.NET Core",
       "Spring Boot",
       "Node.js",
       "Express",
@@ -15,24 +17,25 @@ const groups = [
       "Kafka",
       "Redis",
       "Socket.io",
-      "Prisma",
-      "PostgreSQL",
-      "SQLite",
-      "MongoDB",
-      "MySQL",
+      "Microservices",
+      "RBAC",
     ],
   },
   {
-    title: "Frontend & mobile",
-    skills: ["React", "React Native", "Expo", "Vite", "HTML", "CSS", "SCSS"],
-  },
-  {
-    title: "ML & data science",
-    skills: ["TensorFlow", "Keras", "pandas", "scikit-learn", "Jupyter"],
+    title: "Data & storage",
+    skills: ["PostgreSQL", "SQLite", "MongoDB", "MySQL", "Prisma", "Kusto", "Delta Lake", "Apache Iceberg"],
   },
   {
     title: "Cloud & DevOps",
-    skills: ["Docker", "AWS", "Azure", "Prometheus", "Grafana", "Linux"],
+    skills: ["Azure", "AWS", "Docker", "Terraform", "Prometheus", "Grafana", "Linux", "Git"],
+  },
+  {
+    title: "Frontend & mobile",
+    skills: ["React", "React Native", "Expo", "Vite", "CSS Modules", "HTML", "CSS"],
+  },
+  {
+    title: "Testing, automation & ML",
+    skills: ["Playwright", "pytest", "Hypothesis", "Vitest", "Jest", "TensorFlow", "Keras", "pandas", "scikit-learn"],
   },
 ];
 

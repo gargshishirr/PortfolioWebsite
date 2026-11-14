@@ -1,3 +1,4 @@
+import { achievements } from "../../data/experience";
 import { profile } from "../../data/profile";
 import { Reveal } from "../common/Reveal";
 import styles from "./About.module.css";
@@ -35,22 +36,36 @@ export function About() {
 
           <dl className={styles.facts}>
             <div>
-              <dt>Based in</dt>
-              <dd>{profile.location}</dd>
+              <dt>Working at</dt>
+              <dd>
+                {profile.company} · {profile.team}
+              </dd>
             </div>
             <div>
               <dt>Studied</dt>
-              <dd>{profile.education.school}</dd>
-            </div>
-            <div>
-              <dt>LeetCode</dt>
               <dd>
-                <a href="https://leetcode.com/Hawkeye101" target="_blank" rel="noreferrer">
-                  Hawkeye101 ↗
-                </a>
+                {profile.education.short} · {profile.education.grade}
               </dd>
             </div>
+            <div>
+              <dt>Based in</dt>
+              <dd>{profile.location}</dd>
+            </div>
           </dl>
+
+          <ul className={styles.achievements} aria-label="Achievements and leadership">
+            {achievements.map((item) => (
+              <li key={item.title}>
+                <span className={styles.achievementIcon} aria-hidden="true">
+                  {item.icon}
+                </span>
+                <div>
+                  <p className={styles.achievementTitle}>{item.title}</p>
+                  <p className={styles.achievementDetail}>{item.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
 
           <ul className={styles.fun} aria-label="Fun facts">
             {profile.funFacts.map((fact) => (

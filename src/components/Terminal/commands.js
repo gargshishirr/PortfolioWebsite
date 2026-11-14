@@ -20,6 +20,7 @@ const TONES = {
 const seg = (text, tone) => ({ text, tone });
 const line = (...segments) => segments.map((part) => (typeof part === "string" ? seg(part) : part));
 const pad = (text, width) => text + " ".repeat(Math.max(1, width - text.length));
+const row = (columns, ...cells) => ({ columns, cells });
 
 export const COMMANDS = [
   ["help", "show this list"],
@@ -105,12 +106,14 @@ export function run(raw, actions) {
     case "help":
       return [
         line(seg("Available commands", "mint")),
-        ...COMMANDS.map(([name, description]) => line("  ", seg(pad(name, 30), "amber"), seg(description, "muted"))),
+        ...COMMANDS.map(([name, description]) =>
+          row("28ch minmax(0, 1fr)", seg(name, "amber"), seg(description, "muted")),
+        ),
       ];
     case "whoami":
       return [
-        line(seg(profile.name, "cyan"), " — ", profile.role),
-        line(seg(`${profile.education.degree}, ${profile.education.school}`, "muted")),
+        line(seg(profile.name, "cyan"), " — ", `${profile.role} @ ${profile.company}, ${profile.team}`),
+        line(seg(`${profile.education.degree}, ${profile.education.school} (${profile.education.grade})`, "muted")),
         line(profile.intro),
       ];
     case "ls":
@@ -118,11 +121,11 @@ export function run(raw, actions) {
       return [
         line(seg(`${projects.length} projects`, "mint"), seg("  (open <name> to explore)", "muted")),
         ...projects.map((project) =>
-          line(
-            "  ",
-            seg(pad(project.slug, 22), TONES[project.category]),
-            seg(pad(String(project.year), 7), "muted"),
-            project.tagline,
+          row(
+            "20ch 5ch minmax(0, 1fr)",
+            seg(project.slug, TONES[project.category]),
+            seg(String(project.year), "muted"),
+            seg(project.tagline),
           ),
         ),
       ];
@@ -157,6 +160,7 @@ export function run(raw, actions) {
     case "exp":
       return experience.flatMap((item) => [
         line(seg(item.organisation, "cyan"), " — ", item.role, seg(`  ${item.start} → ${item.end}`, "muted")),
+        ...(item.team ? [line(seg(`  ${item.team}`, "muted"))] : []),
         ...item.points.map((point) => line(seg("  › ", "muted"), point)),
       ]);
     case "contact":
@@ -193,11 +197,11 @@ export function run(raw, actions) {
       const info = [
         [seg("guest", "mint"), "@", seg("shishir.sh", "cyan")],
         [seg("OS        ", "amber"), "Constellation (React + Vite)"],
-        [seg("Host      ", "amber"), `${profile.name}, ${profile.role}`],
+        [seg("Host      ", "amber"), `${profile.role} @ ${profile.company}`],
         [seg("Projects  ", "amber"), `${projects.length} (${live} live)`],
-        [seg("Shell     ", "amber"), "Java · TypeScript · Python · C++"],
+        [seg("Shell     ", "amber"), "C# · Java · TypeScript · Python · C++"],
         [seg("Uptime    ", "amber"), "shipping since 2023"],
-        [seg("Education ", "amber"), "DTU, B.Tech Computer Engineering"],
+        [seg("Education ", "amber"), `DTU, B.Tech CSE · ${profile.education.grade}`],
       ];
       return art.map((row, index) => line(seg(row, "violet"), ...(info[index] || [])));
     }

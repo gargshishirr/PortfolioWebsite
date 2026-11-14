@@ -44,6 +44,7 @@
 }
 
 html {
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-height) + 16px);
   -webkit-text-size-adjust: 100%;
@@ -86,6 +87,30 @@ ul,
 ol {
   padding: 0;
   list-style: none;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(150, 168, 220, 0.28) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgba(150, 168, 220, 0.28) padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(150, 168, 220, 0.45);
 }
 
 ::selection {
@@ -278,6 +303,11 @@ dialog {
   background: transparent;
   max-width: none;
   max-height: none;
+  overflow: hidden;
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
 }
 
 dialog::backdrop {

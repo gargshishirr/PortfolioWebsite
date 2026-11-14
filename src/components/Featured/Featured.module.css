@@ -153,6 +153,7 @@
 .metrics div {
   display: flex;
   flex-direction: column-reverse;
+  justify-content: flex-end;
   gap: 4px;
   padding: 12px 14px;
   border-radius: 14px;
@@ -333,6 +334,24 @@
   transform: rotate(0deg) translateY(-10px);
 }
 
+.reverse {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+}
+
+.reverse .media {
+  order: -1;
+}
+
+.reverse .devices {
+  padding: 0 0 40px 7%;
+}
+
+.reverse .floatingPhone {
+  right: auto;
+  left: 0;
+  transform: rotate(-4deg);
+}
+
 @media (max-width: 1080px) {
   .wide,
   .full {
@@ -351,8 +370,13 @@
 @media (max-width: 760px) {
   .wide,
   .full,
-  .tall {
+  .tall,
+  .reverse {
     grid-template-columns: 1fr;
+  }
+
+  .reverse .media {
+    order: 0;
   }
 
   .phones {

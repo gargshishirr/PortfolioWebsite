@@ -214,6 +214,7 @@
 .metrics div {
   display: flex;
   flex-direction: column-reverse;
+  justify-content: flex-end;
   gap: 6px;
   padding: 16px;
   border-radius: 14px;

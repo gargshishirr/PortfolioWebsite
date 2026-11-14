@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { scrollToSection, useUI } from "../../context/ui";
-import { experience } from "../../data/experience";
 import { profile } from "../../data/profile";
 import { projects } from "../../data/projects";
-import { skillGroups } from "../../data/skills";
 import { useReducedMotion } from "../../hooks/hooks";
 import styles from "./Hero.module.css";
 import { OrbitSystem } from "./OrbitSystem";
@@ -17,10 +15,10 @@ const PHRASES = [
 ];
 
 const stats = [
-  { value: projects.length, label: "projects in orbit" },
-  { value: projects.filter((project) => project.links.live).length, label: "live demos" },
-  { value: experience.length, label: "internships, incl. Microsoft" },
-  { value: skillGroups[0].skills.length, label: "programming languages" },
+  { value: "Billions", label: "requests a month through APIs I built at Microsoft" },
+  { value: "−96%", label: "p99 latency cut on OneLake partner APIs" },
+  { value: projects.length, label: "side projects in the constellation" },
+  { value: projects.filter((project) => project.links.live).length, label: "live demos you can try" },
 ];
 
 export function Hero() {
@@ -40,7 +38,7 @@ export function Hero() {
         <div className={styles.copy}>
           <p className={styles.status}>
             <span className={styles.pulse} aria-hidden="true" />
-            {profile.role} · ex-Microsoft intern · DTU
+            {profile.role} @ {profile.company} · {profile.team}
           </p>
 
           <h1 id="hero-title" className={styles.title}>
@@ -61,9 +59,10 @@ export function Hero() {
           </p>
 
           <p className={styles.lead}>
-            From a Kafka + Redis ad-eligibility service with a ~3&nbsp;ms p50 to a
-            multiplayer coding arena and a UPI expense tracker. Here is everything
-            I&apos;ve built, mapped as a constellation.
+            By day I build OneLake&apos;s access-control APIs for Microsoft Fabric,
+            which SQL, Kusto, Spark and Power BI call billions of times a month.
+            Outside work I ship side projects, from a fail-closed ad gate to a
+            multiplayer coding arena, all mapped below as a constellation.
           </p>
 
           <div className={styles.actions}>

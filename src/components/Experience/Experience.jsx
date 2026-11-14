@@ -1,7 +1,81 @@
+import { useState } from "react";
+
 import { experience } from "../../data/experience";
 import { profile } from "../../data/profile";
 import { Reveal } from "../common/Reveal";
 import styles from "./Experience.module.css";
+
+const COLLAPSED_POINTS = 3;
+
+function Role({ item }) {
+  const [expanded, setExpanded] = useState(false);
+  const extra = item.points.length - COLLAPSED_POINTS;
+  const points = expanded || extra <= 0 ? item.points : item.points.slice(0, COLLAPSED_POINTS);
+  const listId = `points-${item.organisation}-${item.start}`.replace(/\W+/g, "-");
+
+  return (
+    <article className={`${styles.card} ${item.current ? styles.current : ""}`}>
+      <header className={styles.cardHead}>
+        <span className={styles.logo}>
+          <img src={item.logo} alt="" width="40" height="40" />
+        </span>
+        <div className={styles.titles}>
+          <h3>
+            {item.role}
+            <span className={styles.at}> · {item.organisation}</span>
+          </h3>
+          {item.team && <p className={styles.team}>{item.team}</p>}
+        </div>
+        {item.current && (
+          <span className={styles.now}>
+            <i aria-hidden="true" /> Current
+          </span>
+        )}
+      </header>
+
+      {item.summary && <p className={styles.summary}>{item.summary}</p>}
+
+      {item.metrics && (
+        <dl className={styles.metrics}>
+          {item.metrics.map((metric) => (
+            <div key={metric.label}>
+              <dt>{metric.label}</dt>
+              <dd>{metric.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      <ul id={listId} className={styles.points}>
+        {points.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+
+      {extra > 0 && (
+        <button
+          type="button"
+          className={styles.more}
+          aria-expanded={expanded}
+          aria-controls={listId}
+          onClick={() => setExpanded((value) => !value)}
+        >
+          {expanded ? "Show less" : `Show ${extra} more`}
+        </button>
+      )}
+
+      {item.note && <p className={styles.note}>↪ {item.note}</p>}
+
+      <ul className={styles.tags} aria-label="Skills used">
+        {item.tags.map((tag) => (
+          <li key={tag} className="chip">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+}
 
 export function Experience() {
   return (
@@ -16,42 +90,25 @@ export function Experience() {
 
         <ol className={styles.timeline}>
           {experience.map((item, index) => (
-            <Reveal as="li" key={`${item.organisation}-${item.start}`} delay={index * 90} className={styles.entry}>
+            <Reveal
+              as="li"
+              key={`${item.organisation}-${item.start}`}
+              delay={index * 90}
+              className={`${styles.entry} ${item.current ? styles.entryCurrent : ""}`}
+            >
               <div className={styles.when}>
                 <span>{item.start}</span>
                 <span aria-hidden="true">→</span>
                 <span>{item.end}</span>
               </div>
               <span className={styles.marker} aria-hidden="true" />
-              <article className={styles.card}>
-                <header className={styles.cardHead}>
-                  <span className={styles.logo}>
-                    <img src={item.logo} alt="" width="40" height="40" />
-                  </span>
-                  <div>
-                    <h3>{item.organisation}</h3>
-                    <p>{item.role}</p>
-                  </div>
-                </header>
-                <ul className={styles.points}>
-                  {item.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-                <ul className={styles.tags} aria-label="Skills used">
-                  {item.tags.map((tag) => (
-                    <li key={tag} className="chip">
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-              </article>
+              <Role item={item} />
             </Reveal>
           ))}
 
           <Reveal as="li" className={`${styles.entry} ${styles.education}`}>
             <div className={styles.when}>
-              <span>Education</span>
+              <span>{profile.education.years}</span>
             </div>
             <span className={styles.marker} aria-hidden="true" />
             <article className={styles.card}>
@@ -59,9 +116,11 @@ export function Experience() {
                 <span className={`${styles.logo} ${styles.cap}`} aria-hidden="true">
                   🎓
                 </span>
-                <div>
+                <div className={styles.titles}>
                   <h3>{profile.education.school}</h3>
-                  <p>{profile.education.degree}</p>
+                  <p className={styles.team}>
+                    {profile.education.degree} · {profile.education.grade}
+                  </p>
                 </div>
               </header>
             </article>

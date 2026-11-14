@@ -5,10 +5,9 @@ import { profile } from "../../data/profile";
 import { categoryById, projectBySlug, projects } from "../../data/projects";
 import { ProjectArt } from "../common/ProjectArt";
 import { AdGateVisual } from "../visuals/AdGateVisual";
-import { CodeBattleVisual } from "../visuals/CodeBattleVisual";
 import styles from "./ProjectDrawer.module.css";
 
-const VISUALS = { adgate: AdGateVisual, codebattle: CodeBattleVisual };
+const VISUALS = { adgate: AdGateVisual };
 
 function Gallery({ project }) {
   const [active, setActive] = useState(0);
@@ -58,22 +57,13 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
 
   useEffect(() => {
     const dialog = dialogRef.current;
-    if (project && !dialog.open) {
-      dialog.showModal();
-      document.documentElement.style.overflow = "hidden";
-    } else if (!project && dialog.open) {
-      dialog.close();
-    }
-    if (!project) document.documentElement.style.overflow = "";
+    if (project && !dialog.open) dialog.showModal();
+    else if (!project && dialog.open) dialog.close();
   }, [project]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
   }, [slug]);
-
-  useEffect(() => () => {
-    document.documentElement.style.overflow = "";
-  }, []);
 
   const index = project ? projects.indexOf(project) : -1;
   const previous = index >= 0 ? projects[(index - 1 + projects.length) % projects.length] : null;
@@ -115,7 +105,7 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
               <button type="button" onClick={() => onNavigate(next.slug)} aria-label={`Next project: ${next.title}`}>
                 →
               </button>
-              <button type="button" className={styles.close} onClick={onClose} aria-label="Close project details">
+              <button type="button" className={styles.close} onClick={onClose} aria-label="Close project details" autoFocus>
                 ✕
               </button>
             </div>
