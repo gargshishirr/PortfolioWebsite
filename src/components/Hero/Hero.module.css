@@ -1,5 +1,6 @@
 .hero {
   position: relative;
+  overflow-x: clip;
   padding-top: calc(var(--nav-height) + clamp(32px, 7vw, 80px));
   padding-bottom: clamp(48px, 8vw, 96px);
   min-height: min(100svh, 900px);
@@ -13,6 +14,90 @@
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(24px, 4vw, 48px);
+}
+
+.portrait {
+  position: relative;
+  max-width: 460px;
+  width: 100%;
+  margin-inline: auto;
+  aspect-ratio: 1;
+}
+
+.portrait img {
+  position: relative;
+  z-index: 1;
+  width: 78%;
+  height: 78%;
+  margin: 11%;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: brightness(1.18) saturate(1.05);
+  animation: fadeIn 1.2s 0.1s var(--ease-out) both;
+  box-shadow: 0 30px 90px -30px rgba(95, 231, 240, 0.45);
+}
+
+.rings {
+  position: absolute;
+  inset: 0;
+}
+
+.rings span {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(95, 231, 240, 0.35);
+  animation: spin 40s linear infinite;
+}
+
+.rings span:nth-child(2) {
+  inset: 6%;
+  border-style: solid;
+  border-color: rgba(183, 159, 255, 0.25);
+  animation-duration: 28s;
+  animation-direction: reverse;
+}
+
+.rings span:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--violet);
+  box-shadow: 0 0 16px var(--violet);
+}
+
+.rings span:nth-child(1)::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 14px var(--cyan);
+}
+
+.rings span:nth-child(3) {
+  inset: -8%;
+  border-color: rgba(255, 154, 183, 0.18);
+  animation-duration: 60s;
+}
+
+.hello {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  animation: rise 1s var(--ease-out) both;
 }
 
 .copy {
@@ -54,9 +139,9 @@
 }
 
 .title {
-  margin-top: 22px;
+  margin-top: 26px;
   font-family: var(--font-display);
-  font-size: clamp(64px, 11vw, 148px);
+  font-size: clamp(60px, 9.5vw, 128px);
   font-weight: 650;
   line-height: 0.88;
   letter-spacing: -0.06em;
@@ -67,17 +152,17 @@
   animation: rise 1s var(--ease-out) both;
 }
 
-.titleLine:nth-child(2) {
+.titleLine:last-child {
   animation-delay: 0.08s;
   padding-bottom: 0.08em;
 }
 
 .lead {
   margin-top: 28px;
-  max-width: 34ch;
+  max-width: 44ch;
   color: var(--muted);
-  font-size: clamp(18px, 1.9vw, 22px);
-  line-height: 1.5;
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.6;
   animation: rise 1s 0.16s var(--ease-out) both;
 }
 
@@ -89,56 +174,15 @@
   animation: rise 1s 0.28s var(--ease-out) both;
 }
 
-.orbitWrap {
-  --tilt-x: 0deg;
-  --tilt-y: 0deg;
-  position: relative;
-  perspective: 1200px;
-  animation: fadeIn 1.6s 0.2s var(--ease-out) both;
-}
-
-.orbit {
-  width: 100%;
-  max-width: 620px;
-  margin-inline: auto;
-  overflow: visible;
-  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.6s var(--ease-out);
-}
-
-.orbit g {
-  transition: opacity 0.2s linear;
-}
-
-.coreGlow {
-  animation: breathe 5s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.corePulse {
-  animation: ring 3.2s ease-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.coreText {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  fill: #04211f;
-}
-
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
   }
 
-  .orbitWrap {
-    max-width: 300px;
-    width: 100%;
-    margin: 12px auto -40px;
+  .portrait {
+    order: -1;
+    max-width: 200px;
+    margin: 0 0 4px -8px;
   }
 
   .status {
@@ -171,20 +215,8 @@
   }
 }
 
-@keyframes breathe {
-  50% {
-    transform: scale(1.08);
-    opacity: 0.8;
-  }
-}
-
-@keyframes ring {
-  from {
-    transform: scale(0.8);
-    opacity: 0.9;
-  }
+@keyframes spin {
   to {
-    transform: scale(1.5);
-    opacity: 0;
+    transform: rotate(360deg);
   }
 }

@@ -5,35 +5,21 @@ import styles from "./About.module.css";
 
 export function About() {
   return (
-    <section className={`section ${styles.section}`} id="about" aria-labelledby="about-title">
+    <section className="section" id="about" aria-labelledby="about-title">
       <div className={`page ${styles.grid}`}>
-        <Reveal className={styles.portrait}>
-          <div className={styles.rings} aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <img
-            src={profile.photo}
-            alt="Shishir smiling in a beanie on a snowy mountain ridge"
-            width="640"
-            height="618"
-            loading="lazy"
-            decoding="async"
-          />
-        </Reveal>
-
-        <Reveal delay={100} className={styles.copy}>
+        <Reveal className={styles.copy}>
           <p className="eyebrow">About</p>
           <h2 id="about-title" className="section-title">
-            Hi, I&apos;m {profile.firstName}.
+            A little more <span className="gradient-text">about me.</span>
           </h2>
           {profile.about.map((paragraph) => (
             <p key={paragraph} className={styles.paragraph}>
               {paragraph}
             </p>
           ))}
+        </Reveal>
 
+        <Reveal delay={100}>
           <ul className={styles.achievements} aria-label="Achievements and leadership">
             {achievements.map((item) => (
               <li key={item.title}>
@@ -47,7 +33,6 @@ export function About() {
               </li>
             ))}
           </ul>
-
         </Reveal>
       </div>
     </section>

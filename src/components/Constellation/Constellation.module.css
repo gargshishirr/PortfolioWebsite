@@ -1,5 +1,5 @@
 .block {
-  margin-top: clamp(96px, 12vw, 150px);
+  margin-top: clamp(72px, 9vw, 112px);
 }
 
 .head {

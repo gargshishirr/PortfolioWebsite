@@ -19,10 +19,10 @@ export const profile = {
     grade: "CGPA 8.61",
   },
   intro:
-    "Software engineer at Microsoft building OneLake's access-control APIs. I build backend systems that fail safely, real-time products that feel instant, and tools people enjoy using.",
+    "I'm a software engineer at Microsoft, building large-scale distributed systems for OneLake, the data lake behind Microsoft Fabric. Outside work I build side projects, from a fail-closed ad gate to a multiplayer coding arena.",
   about: [
-    "I'm a software engineer at Microsoft on OneLake Security, the access-control layer of Microsoft Fabric. I interned on OneLake in 2024, came back full-time in 2025, and now build the APIs that SQL, Kusto, Spark and Power BI call to decide who can see which rows and columns.",
-    "I like the invisible parts of software: hot paths measured in milliseconds, caches that have to be correct, and systems that stay honest when a dependency goes down. Off the keyboard you'll find me gaming, watching movies or hunting for good food.",
+    "I studied Computer Engineering at Delhi Technological University, interned on Microsoft's OneLake team in 2024 and joined full-time in 2025. These days I work on the distributed services that decide who can see which rows and columns, at billions of requests a month.",
+    "I like the invisible parts of software: hot paths measured in milliseconds, caches that have to be correct, and systems that stay honest when a dependency goes down. Off the keyboard you'll find me on a badminton court, behind a camera, gaming, watching movies or hunting for good food.",
   ],
   socials: [
     {
