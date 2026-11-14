@@ -48,6 +48,8 @@ function BrowserAndPhone({ desktop, phone, url }) {
   );
 }
 
+const MORE = ["proctorcode", "accessdesk", "reqlab", "jobbot"];
+
 const FEATURES = [
   {
     slug: "adgate",
@@ -81,6 +83,18 @@ const FEATURES = [
       />
     ),
   },
+  {
+    slug: "wanderly",
+    layout: "full",
+    reverse: true,
+    media: (
+      <BrowserAndPhone
+        desktop={projectBySlug.wanderly.images[0]}
+        phone={projectBySlug.wanderly.images[1]}
+        url="wanderly-fna8.onrender.com"
+      />
+    ),
+  },
 ];
 
 export function Featured() {
@@ -93,6 +107,7 @@ export function Featured() {
           <h2 id="work-title" className="section-title">
             Things I&apos;ve built, <span className="gradient-text">built to hold up.</span>
           </h2>
+          <p className="section-lead">Side projects I build outside my day job.</p>
         </Reveal>
 
         <div className={styles.bento}>
@@ -104,7 +119,7 @@ export function Featured() {
                 as="article"
                 key={project.slug}
                 delay={index * 80}
-                className={`${styles.card} ${styles[feature.layout]}`}
+                className={`${styles.card} ${styles[feature.layout]} ${feature.reverse ? styles.reverse : ""}`}
                 style={{ "--accent": category.color }}
                 onPointerMove={trackSpotlight}
               >
@@ -148,6 +163,47 @@ export function Featured() {
             );
           })}
         </div>
+
+        <h3 className={styles.moreHeading}>More projects I&apos;m proud of</h3>
+        <ul className={styles.more}>
+          {MORE.map((slug, index) => {
+            const project = projectBySlug[slug];
+            const category = categoryById[project.category];
+            return (
+              <Reveal
+                as="li"
+                key={slug}
+                delay={index * 60}
+                className={styles.mini}
+                style={{ "--accent": category.color }}
+              >
+                <div className={styles.miniCover}>
+                  <img src={project.images[0].src} alt="" loading="lazy" decoding="async" />
+                </div>
+                <div className={styles.miniBody}>
+                  <p className={styles.meta}>
+                    {category.label} · {project.year}
+                  </p>
+                  <h4 className={styles.miniTitle}>
+                    <button
+                      type="button"
+                      className={styles.stretch}
+                      onClick={() => openProject(project.slug)}
+                    >
+                      {project.title}
+                    </button>
+                  </h4>
+                  <p className={styles.miniTagline}>{project.tagline}</p>
+                  {project.links.live && (
+                    <a className={styles.raised} href={project.links.live} target="_blank" rel="noreferrer">
+                      Live demo ↗
+                    </a>
+                  )}
+                </div>
+              </Reveal>
+            );
+          })}
+        </ul>
     </div>
   );
 }

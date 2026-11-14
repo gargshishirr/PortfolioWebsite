@@ -1,7 +1,6 @@
 import { scrollToSection } from "../../context/ui";
 import { profile } from "../../data/profile";
 import styles from "./Hero.module.css";
-import { OrbitSystem } from "./OrbitSystem";
 
 export function Hero() {
   return (
@@ -14,14 +13,12 @@ export function Hero() {
           </p>
 
           <h1 id="hero-title" className={styles.title}>
+            <span className={styles.hello}>Hi, I&apos;m</span>
             <span className={styles.titleLine}>Shishir</span>
             <span className={`${styles.titleLine} gradient-text`}>Garg</span>
           </h1>
 
-          <p className={styles.lead}>
-            I build OneLake&apos;s access-control APIs for Microsoft Fabric, and side
-            projects that fail safely and feel instant.
-          </p>
+          <p className={styles.lead}>{profile.intro}</p>
 
           <div className={styles.actions}>
             <a
@@ -40,7 +37,20 @@ export function Hero() {
           </div>
         </div>
 
-        <OrbitSystem />
+        <div className={styles.portrait}>
+          <div className={styles.rings} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <img
+            src={profile.photo}
+            alt="Shishir smiling in a beanie on a snowy mountain ridge"
+            width="640"
+            height="618"
+            decoding="async"
+          />
+        </div>
       </div>
     </section>
   );

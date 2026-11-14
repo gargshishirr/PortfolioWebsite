@@ -12,7 +12,7 @@ export const experience = [
     end: "Present",
     current: true,
     summary:
-      "I build the access-control layer of OneLake, the data lake behind Microsoft Fabric. My APIs decide who can see which rows and columns, and every major query engine asks them at query time.",
+      "I build large-scale distributed systems for OneLake, the data lake behind Microsoft Fabric. My services enforce access control for SQL, Kusto, Spark and Power BI at query time, at billions of requests a month.",
     metrics: [
       { value: "Billions", label: "requests a month across 4+ engines" },
       { value: "−96%", label: "p99 latency on partner APIs" },
