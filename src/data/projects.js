@@ -201,7 +201,7 @@ export const projects = [
       { value: "22", label: "designed screens" },
       { value: "0", label: "sign-ups required" },
     ],
-    links: {},
+    links: { live: "https://gargshishirr.github.io/kharcha/" },
     images: [
       { src: kharchaAdd, kind: "phone", alt: "Kharcha add-expense keypad showing ₹250" },
       { src: kharchaSplit, kind: "phone", alt: "Kharcha split screen with group balances" },
@@ -381,7 +381,7 @@ export const projects = [
     ],
     metrics: [],
     links: {
-      live: "https://pathfinder-visualiser-tau.vercel.app",
+      live: "https://gargshishirr.github.io/Pathfinder_Visualiser/",
       source: `${GITHUB}/Pathfinder_Visualiser`,
     },
     images: [
