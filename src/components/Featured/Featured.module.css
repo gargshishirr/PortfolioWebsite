@@ -14,8 +14,9 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background:
-    radial-gradient(500px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 10%, transparent), transparent 45%),
-    linear-gradient(180deg, rgba(16, 21, 40, 0.82), rgba(8, 11, 22, 0.82));
+    radial-gradient(520px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 7%, transparent), transparent 45%),
+    rgba(255, 255, 255, 0.74);
+  box-shadow: var(--shadow-soft);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
@@ -33,7 +34,7 @@
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: radial-gradient(400px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 70%, transparent), transparent 40%);
+  background: radial-gradient(400px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 45%, transparent), transparent 40%);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -46,7 +47,7 @@
 
 .card:hover {
   border-color: color-mix(in srgb, var(--accent) 30%, transparent);
-  box-shadow: 0 40px 100px -50px color-mix(in srgb, var(--accent) 60%, transparent);
+  box-shadow: 0 34px 80px -44px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .card:hover::before {
@@ -91,10 +92,11 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(30px, 3.4vw, 44px);
-  font-weight: 600;
-  letter-spacing: -0.04em;
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   line-height: 1;
+  color: var(--plum);
 }
 
 .stretch {
@@ -189,11 +191,11 @@
 .phone {
   overflow: hidden;
   border-radius: 26px;
-  border: 5px solid #1b2034;
+  border: 5px solid #fff;
   background: #fff;
   box-shadow:
-    0 30px 60px -20px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
+    0 26px 50px -22px rgba(40, 30, 40, 0.5),
+    0 0 0 1px rgba(74, 44, 58, 0.1);
 }
 
 .phones .phone {
@@ -232,7 +234,7 @@
   overflow: hidden;
   border-radius: 14px;
   border: 1px solid var(--line-strong);
-  background: #0f1322;
+  background: #fff;
   box-shadow: var(--shadow);
 }
 
@@ -242,6 +244,7 @@
   gap: 6px;
   padding: 9px 12px;
   border-bottom: 1px solid var(--line);
+  background: #f5f3ef;
   color: var(--subtle);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -251,14 +254,14 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(74, 44, 58, 0.16);
 }
 
 .browserBar span {
   margin-left: 10px;
   padding: 2px 10px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(74, 44, 58, 0.06);
 }
 
 .floatingPhone {
@@ -295,9 +298,14 @@
 .moreHeading {
   margin: clamp(64px, 8vw, 96px) 0 20px;
   font-family: var(--font-display);
-  font-size: clamp(22px, 2.6vw, 28px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-size: clamp(30px, 3.2vw, 40px);
+  font-weight: 400;
+  color: var(--plum);
+}
+
+.moreHeading em {
+  font-style: italic;
+  color: var(--plum-soft);
 }
 
 .more {
@@ -313,7 +321,8 @@
   overflow: hidden;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: var(--panel);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-soft);
   transition:
     border-color 0.3s,
     transform 0.5s var(--ease-out),
@@ -332,7 +341,7 @@
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
-  background: #0a0d1a;
+  background: #f2f1ed;
 }
 
 .miniCover img {
@@ -358,9 +367,10 @@
 
 .miniTitle {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--plum);
 }
 
 .miniTagline {

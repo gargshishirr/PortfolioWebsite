@@ -13,11 +13,10 @@
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid var(--line-strong);
-  background: rgba(9, 12, 24, 0.97);
+  background: rgba(251, 250, 246, 0.98);
   box-shadow:
     var(--shadow),
-    0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 0 80px -20px rgba(95, 231, 240, 0.25);
+    0 0 0 1px rgba(74, 44, 58, 0.04);
 }
 
 .inputRow {
@@ -52,7 +51,7 @@
 }
 
 .option {
-  --accent: var(--cyan);
+  --accent: var(--teal);
   position: relative;
   display: flex;
   align-items: center;
@@ -84,7 +83,7 @@
 }
 
 .option[aria-selected="true"] {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(90, 43, 61, 0.07);
   color: var(--text);
 }
 
@@ -94,7 +93,8 @@
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #fff;
+  border: 1px solid var(--line);
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 12px;

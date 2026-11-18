@@ -1,57 +1,61 @@
 import { scrollToSection } from "../../context/ui";
 import { profile } from "../../data/profile";
+import { Pond } from "../Pond/Pond";
 import styles from "./Hero.module.css";
+
+const github = profile.socials.find((social) => social.label === "GitHub");
+const linkedin = profile.socials.find((social) => social.label === "LinkedIn");
+
+const PILLS = [
+  { label: "selected work", href: "#work", section: "work", spot: "work" },
+  { label: "github", href: github.href, spot: "github" },
+  { label: "linkedin", href: linkedin.href, spot: "linkedin" },
+  { label: "say hi", href: `mailto:${profile.email}`, spot: "hi" },
+];
 
 export function Hero() {
   return (
     <section className={styles.hero} id="top" aria-labelledby="hero-title">
-      <div className={`page ${styles.grid}`}>
-        <div className={styles.copy}>
-          <p className={styles.status}>
-            <span className={styles.pulse} aria-hidden="true" />
-            {profile.role} @ {profile.company}
-          </p>
+      <Pond />
 
-          <h1 id="hero-title" className={styles.title}>
-            <span className={styles.hello}>Hi, I&apos;m</span>
-            <span className={styles.titleLine}>Shishir</span>
-            <span className={`${styles.titleLine} gradient-text`}>Garg</span>
-          </h1>
-
-          <p className={styles.lead}>{profile.intro}</p>
-
-          <div className={styles.actions}>
-            <a
-              className="button button-primary"
-              href="#work"
-              onClick={(event) => {
-                event.preventDefault();
-                scrollToSection("work");
-              }}
-            >
-              See my work
-            </a>
-            <a className="button" href={profile.resume} target="_blank" rel="noreferrer">
-              Resume <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.portrait}>
-          <div className={styles.rings} aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <img
-            src={profile.photo}
-            alt="Shishir smiling in a beanie on a snowy mountain ridge"
-            width="640"
-            height="618"
-            decoding="async"
-          />
-        </div>
+      <div className={styles.content}>
+        <h1 id="hero-title" className={styles.title}>
+          hi, i&apos;m <em>shishir</em>
+        </h1>
+        <p className={styles.subtitle}>
+          software engineer building large-scale distributed systems
+        </p>
+        <p className={styles.status}>
+          <span className={styles.dot} aria-hidden="true" />
+          currently at microsoft, on onelake
+          <span aria-hidden="true"> •</span>
+        </p>
       </div>
+
+      <ul className={styles.pills}>
+        {PILLS.map((pill) => (
+          <li key={pill.label} className={styles[pill.spot]}>
+            <a
+              className={styles.pill}
+              href={pill.href}
+              {...(pill.section
+                ? {
+                    onClick: (event) => {
+                      event.preventDefault();
+                      scrollToSection(pill.section);
+                    },
+                  }
+                : { target: pill.href.startsWith("mailto:") ? undefined : "_blank", rel: "noreferrer" })}
+            >
+              {pill.label} <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p className={styles.hint} aria-hidden="true">
+        tap the water
+      </p>
     </section>
   );
 }
