@@ -14,7 +14,7 @@ function Role({ item }) {
   const listId = `points-${item.organisation}-${item.start}`.replace(/\W+/g, "-");
 
   return (
-    <article className={`${styles.card} ${item.current ? styles.current : ""}`}>
+    <article className={styles.card}>
       <header className={styles.cardHead}>
         <span className={styles.logo}>
           <img src={item.logo} alt="" width="40" height="40" />
@@ -76,7 +76,6 @@ export function Experience() {
     <section className="section" id="experience" aria-labelledby="experience-title">
       <div className="page">
         <Reveal className="section-head">
-          <p className="eyebrow">experience</p>
           <h2 id="experience-title" className="section-title">
             where i&apos;ve <span className="gradient-text">worked</span>
           </h2>
@@ -88,23 +87,21 @@ export function Experience() {
               as="li"
               key={`${item.organisation}-${item.start}`}
               delay={index * 90}
-              className={`${styles.entry} ${item.current ? styles.entryCurrent : ""}`}
+              className={styles.entry}
             >
               <div className={styles.when}>
                 <span>{item.start}</span>
                 <span aria-hidden="true">→</span>
                 <span>{item.end}</span>
               </div>
-              <span className={styles.marker} aria-hidden="true" />
               <Role item={item} />
             </Reveal>
           ))}
 
-          <Reveal as="li" className={`${styles.entry} ${styles.education}`}>
+          <Reveal as="li" className={styles.entry}>
             <div className={styles.when}>
               <span>{profile.education.years}</span>
             </div>
-            <span className={styles.marker} aria-hidden="true" />
             <article className={styles.card}>
               <header className={styles.cardHead}>
                 <span className={`${styles.logo} ${styles.cap}`} aria-hidden="true">

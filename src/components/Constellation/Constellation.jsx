@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import { useUI } from "../../context/ui";
 import { categories, categoryById, projectBySlug, projects } from "../../data/projects";
 import { useMediaQuery } from "../../hooks/hooks";
-import { ProjectArt } from "../common/ProjectArt";
 import { Reveal } from "../common/Reveal";
 import styles from "./Constellation.module.css";
 import { Pond } from "../Pond/Pond";
@@ -134,39 +133,19 @@ function Preview({ project, position }) {
   );
 }
 
-function ProjectGrid({ items, onOpen }) {
-  if (!items.length) {
-    return <p className={styles.empty}>No projects match this filter yet.</p>;
-  }
+function ProjectList({ items, onOpen }) {
   return (
-    <ul className={styles.grid}>
+    <ul className={styles.list}>
       {items.map((project) => {
         const category = categoryById[project.category];
-        const cover = project.images[0];
         return (
-          <li key={project.slug} className={styles.card} style={{ "--accent": category.color }}>
-            <div className={styles.cover}>
-              {cover ? (
-                <img src={cover.src} alt="" loading="lazy" decoding="async" data-kind={cover.kind} />
-              ) : (
-                <ProjectArt project={project} className={styles.art} />
-              )}
-              <span className={styles.badges}>
-                {project.links.live && <span className={styles.live}>● Live</span>}
+          <li key={project.slug} style={{ "--accent": category.color }}>
+            <button type="button" onClick={() => onOpen(project.slug)}>
+              <span className={styles.listTitle}>{project.title}</span>
+              <span className={styles.listMeta}>
+                {category.label.toLowerCase()} · {project.year}
               </span>
-            </div>
-            <div className={styles.cardBody}>
-              <p className={styles.cardMeta}>
-                <span>{category.label}</span>
-                <span>{project.year}</span>
-              </p>
-              <h3 className={styles.cardTitle}>
-                <button type="button" onClick={() => onOpen(project.slug)}>
-                  {project.title}
-                </button>
-              </h3>
-              <p className={styles.cardTagline}>{project.tagline}</p>
-            </div>
+            </button>
           </li>
         );
       })}
@@ -177,8 +156,6 @@ function ProjectGrid({ items, onOpen }) {
 export function Constellation() {
   const { filter, setFilter, openProject } = useUI();
   const wide = useMediaQuery("(min-width: 760px)");
-  const [viewChoice, setViewChoice] = useState(null);
-  const view = wide ? viewChoice ?? "map" : "list";
 
   const filtered = useMemo(() => projects.filter((project) => matches(project, filter)), [filter]);
   const visible = useMemo(() => new Set(filtered.map((project) => project.slug)), [filtered]);
@@ -186,76 +163,35 @@ export function Constellation() {
   return (
     <div className={`page ${styles.block}`} id="projects">
       <Reveal className={styles.head}>
-        <div>
-          <h3 className={styles.heading}>
-            the whole <em>pond</em>
-          </h3>
-          <p className={styles.sub}>
-            All {projects.length} projects float here as lily pads. Hover one to peek, click to open.
-          </p>
-        </div>
-        <div className={styles.viewToggle} role="group" aria-label="View">
-          {["map", "list"].map((option) => (
-            <button
-              key={option}
-              type="button"
-              aria-pressed={view === option}
-              onClick={() => setViewChoice(option)}
-            >
-              {option === "map" ? "Map" : "List"}
-            </button>
-          ))}
-        </div>
+        <h3 className={styles.heading}>
+          the whole <em>pond</em>
+        </h3>
+        <p className={styles.sub}>
+          {wide
+            ? `All ${projects.length} projects, floating as lily pads. Hover to peek, click to open.`
+            : `All ${projects.length} projects.`}
+        </p>
       </Reveal>
 
-      <div className={styles.chips} role="group" aria-label="Filter by category">
-        <button
-          type="button"
-          className={styles.filterChip}
-          aria-pressed={filter.type === "all"}
-          onClick={() => setFilter({ type: "all", value: null })}
-        >
-          All
-        </button>
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            type="button"
-            className={styles.filterChip}
-            style={{ "--accent": category.color }}
-            aria-pressed={filter.type === "category" && filter.value === category.id}
-            onClick={() =>
-              setFilter(
-                filter.type === "category" && filter.value === category.id
-                  ? { type: "all", value: null }
-                  : { type: "category", value: category.id },
-              )
-            }
-          >
-            <i aria-hidden="true" />
-            {category.label}
-          </button>
-        ))}
-      </div>
-
       <p className={styles.status} aria-live="polite">
-        {filter.type === "skill" && (
+        {filter.type !== "all" && (
           <>
-            {filtered.length} of {projects.length} projects use {filter.value}
+            {filtered.length} of {projects.length} projects use{" "}
+            {filter.type === "skill" ? filter.value : categoryById[filter.value].label}
             <button type="button" onClick={() => setFilter({ type: "all", value: null })}>
-              Clear ×
+              show all
             </button>
           </>
         )}
       </p>
 
-        {view === "map" ? (
-          <Reveal>
-            <StarMap visible={visible} onOpen={openProject} />
-          </Reveal>
-        ) : (
-          <ProjectGrid items={filtered} onOpen={openProject} />
-        )}
+      {wide ? (
+        <Reveal>
+          <StarMap visible={visible} onOpen={openProject} />
+        </Reveal>
+      ) : (
+        <ProjectList items={filtered} onOpen={openProject} />
+      )}
     </div>
   );
 }
