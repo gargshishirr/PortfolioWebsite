@@ -1,10 +1,9 @@
 export const VIEW = { width: 1000, height: 620 };
 
 export const POSITIONS = {
-  adgate: [170, 150],
+  adgate: [190, 165],
   accessdesk: [335, 100],
-  reqlab: [375, 240],
-  jobbot: [205, 285],
+  reqlab: [300, 290],
   codebattle: [610, 165],
   wanderly: [790, 100],
   proctorcode: [885, 235],

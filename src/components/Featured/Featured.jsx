@@ -14,7 +14,7 @@ const SELECTED = [
   "proctorcode",
   "accessdesk",
   "reqlab",
-  "jobbot",
+  "pathfinder",
 ];
 
 function Cover({ project }) {

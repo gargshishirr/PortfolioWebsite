@@ -7,7 +7,6 @@ import codebattleBattle from "../assets/projects/codebattle-battle.webp";
 import codebattleCreate from "../assets/projects/codebattle-create.webp";
 import codebattleLobby from "../assets/projects/codebattle-lobby.webp";
 import cryptoDataset from "../assets/projects/crypto-dataset.webp";
-import jobbotGuide from "../assets/projects/jobbot-guide.webp";
 import medrecordsCard from "../assets/projects/medrecords-card.webp";
 import medrecordsLabs from "../assets/projects/medrecords-labs.webp";
 import medrecordsMobile from "../assets/projects/medrecords-mobile.webp";
@@ -306,34 +305,6 @@ export const projects = [
     links: { source: `${GITHUB}/reqlab` },
     images: [
       { src: reqlab, kind: "desktop", alt: "ReqLab sending a GET request to the GitHub API with a pretty-printed JSON response" },
-    ],
-  },
-  {
-    slug: "jobbot",
-    title: "JobBot",
-    category: "backend",
-    year: 2026,
-    featured: false,
-    visibility: "private",
-    tagline: "A personal job-hunting pipeline: find, rank, alert and apply.",
-    summary:
-      "A local automation pipeline that watches company career portals and job boards, ranks every opening against my resume, alerts me only about new matches, and pre-fills application forms in a real browser.",
-    stack: ["Python", "Playwright", "SQLite", "pytest"],
-    highlights: [
-      "Aggregates postings from 130+ sources: Greenhouse, Lever, Ashby, Workday, SmartRecruiters and other ATSs, remote job boards, Hacker News “Who is hiring” and RSS.",
-      "Scores each job 0–100 against the resume using skill overlap, text similarity and seniority fit, with optional AI scoring.",
-      "Notifies only about new matches through macOS notifications, Telegram, ntfy, email, Slack or Discord.",
-      "Uses Playwright to open applications pre-filled with my details and resume, with opt-in auto-submit when every question is answered.",
-      "Runs on a launchd schedule with a live HTML dashboard. Everything stays local in SQLite, covered by 124 pytest tests.",
-    ],
-    metrics: [
-      { value: "130+", label: "companies and job boards" },
-      { value: "6", label: "alert channels" },
-      { value: "124", label: "pytest tests" },
-    ],
-    links: {},
-    images: [
-      { src: jobbotGuide, kind: "desktop", alt: "JobBot's visual guide: what it does, with feature badges for 130+ sources, 6 alert channels and form filling" },
     ],
   },
   {
