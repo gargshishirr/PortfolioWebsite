@@ -534,19 +534,13 @@ function drawLotus(ctx, x, y, size, rot) {
 
 const LAYOUTS = {
   edges: [
-    { fx: -0.015, fy: 0.3, r: 0.085, flower: true, rot: 0.4 },
-    { fx: 0.06, fy: 0.5, r: 0.045, rot: 2.6 },
-    { fx: -0.01, fy: 0.9, r: 0.07, flower: true, rot: 3.9 },
-    { fx: 1.02, fy: 0.18, r: 0.08, flower: true, rot: 2.2 },
-    { fx: 0.95, fy: 0.34, r: 0.04, rot: 4.4 },
-    { fx: 0.985, fy: 0.84, r: 0.06, rot: 5.6 },
+    { fx: -0.015, fy: 0.32, r: 0.08, flower: true, rot: 0.4 },
+    { fx: 1.02, fy: 0.2, r: 0.075, flower: true, rot: 2.2 },
+    { fx: 0.975, fy: 0.86, r: 0.05, rot: 5.6 },
   ],
   corners: [
-    { fx: 0.02, fy: 0.12, r: 0.06, flower: true, rot: 0.6 },
-    { fx: 0.085, fy: 0.3, r: 0.035, rot: 2.9 },
-    { fx: 0.97, fy: 0.8, r: 0.065, flower: true, rot: 4.2 },
-    { fx: 0.9, fy: 0.95, r: 0.035, rot: 1.4 },
-    { fx: 1.0, fy: 0.55, r: 0.04, rot: 3.3 },
+    { fx: 0.02, fy: 0.14, r: 0.06, flower: true, rot: 0.6 },
+    { fx: 0.97, fy: 0.84, r: 0.055, flower: true, rot: 4.2 },
   ],
   none: [],
 };
