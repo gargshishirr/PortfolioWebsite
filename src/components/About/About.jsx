@@ -20,7 +20,6 @@ export function About() {
         </Reveal>
 
         <Reveal delay={100} className={styles.copy}>
-          <p className="eyebrow">about</p>
           <h2 id="about-title" className="section-title">
             a little more <span className="gradient-text">about me</span>
           </h2>

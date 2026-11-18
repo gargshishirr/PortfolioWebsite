@@ -1,34 +1,14 @@
-import { useEffect, useState } from "react";
-
 import { profile } from "../../data/profile";
 import { Reveal } from "../common/Reveal";
 import { Pond } from "../Pond/Pond";
 import styles from "./Contact.module.css";
 
 export function Contact() {
-  const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    if (!copied) return undefined;
-    const timer = setTimeout(() => setCopied(false), 2200);
-    return () => clearTimeout(timer);
-  }, [copied]);
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(profile.email);
-      setCopied(true);
-    } catch {
-      window.location.href = `mailto:${profile.email}`;
-    }
-  };
-
   return (
     <section className="section" id="contact" aria-labelledby="contact-title">
       <div className="page">
         <Reveal className={styles.panel}>
           <Pond fish={3} pads="corners" />
-          <p className="eyebrow">say hello</p>
           <h2 id="contact-title" className={styles.title}>
             let&apos;s build something
             <br />
@@ -40,25 +20,19 @@ export function Contact() {
             <a className="button button-primary" href={`mailto:${profile.email}`}>
               {profile.email}
             </a>
-            <button type="button" className="button" onClick={copyEmail}>
-              {copied ? "Copied ✓" : "Copy email"}
-            </button>
-            <span className="visually-hidden" aria-live="polite">
-              {copied ? "Email address copied to clipboard" : ""}
-            </span>
           </div>
 
           <ul className={styles.socials}>
             {profile.socials.map((social) => (
               <li key={social.label}>
                 <a href={social.href} target="_blank" rel="noreferrer">
-                  {social.label}
+                  {social.label.toLowerCase()}
                 </a>
               </li>
             ))}
             <li>
               <a href={profile.resume} target="_blank" rel="noreferrer">
-                Resume
+                résumé
               </a>
             </li>
           </ul>
@@ -68,7 +42,7 @@ export function Contact() {
       <footer className={`page ${styles.footer}`}>
         <p>© {new Date().getFullYear()} {profile.name}</p>
         <p>
-          Psst, press <kbd>~</kbd>
+          psst, press <kbd>~</kbd>
         </p>
       </footer>
     </section>

@@ -186,27 +186,6 @@ ol {
   margin-bottom: clamp(36px, 6vw, 56px);
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: lowercase;
-  color: var(--teal);
-}
-
-.eyebrow::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.7;
-}
-
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(42px, 6.4vw, 76px);

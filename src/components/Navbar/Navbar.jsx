@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { scrollToSection, sections, useUI } from "../../context/ui";
+import { scrollToSection, sections } from "../../context/ui";
 import { profile } from "../../data/profile";
 import { useActiveSection } from "../../hooks/hooks";
 import styles from "./Navbar.module.css";
@@ -8,7 +8,6 @@ import styles from "./Navbar.module.css";
 const ids = sections.map((section) => section.id);
 
 export function Navbar() {
-  const { openPalette } = useUI();
   const active = useActiveSection(ids);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -76,25 +75,8 @@ export function Navbar() {
               résumé <span aria-hidden="true">↗</span>
             </a>
           </li>
-          <li className={styles.menuOnly}>
-            <a href="#contact" onClick={(event) => go(event, "contact")}>
-              contact
-            </a>
-          </li>
         </ul>
 
-        <div className={styles.tools}>
-          <button type="button" className={styles.search} onClick={openPalette}>
-            <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true">
-              <circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" strokeWidth="1.8" />
-              <path d="m14 14 4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
-            <span className="visually-hidden">Search (⌘K)</span>
-          </button>
-          <a className={styles.talk} href="#contact" onClick={(event) => go(event, "contact")}>
-            let&apos;s talk <span aria-hidden="true">↗</span>
-          </a>
-        </div>
       </nav>
     </header>
   );

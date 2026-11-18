@@ -66,7 +66,7 @@ class Koi {
     return this.spine[0];
   }
 
-  update(dt, time, fish, pointer, food) {
+  update(dt, time, fish, pointer, fears) {
     const { width, height } = this.pond;
     const head = this.head;
     let dx = Math.cos(this.heading);
@@ -106,10 +106,27 @@ class Koi {
       }
     }
 
+    // Taps leave a fear zone for a few seconds: koi inside swim out of it, and koi outside steer around it.
+    let afraid = false;
+    for (const fear of fears) {
+      const ax = head.x - fear.x;
+      const ay = head.y - fear.y;
+      const d = Math.hypot(ax, ay) || 1;
+      const reach = fear.radius * 1.35;
+      if (d >= reach) continue;
+      const fade = clamp((fear.until - time) / 1.5, 0, 1);
+      const closeness = 1 - d / reach;
+      const push = (3 + closeness * 12) * fade;
+      wx += (ax / d) * push;
+      wy += (ay / d) * push;
+      if (d < fear.radius) {
+        afraid = true;
+        this.boost = Math.max(this.boost, (0.35 + closeness * 0.65) * fade);
+      }
+    }
+
     let target = null;
-    if (food && time > food.start && time < food.end && this.curiosity > 0.55) {
-      target = { x: food.x + Math.cos(time * 0.9 + this.seedA) * this.len * 0.35, y: food.y + Math.sin(time * 0.9 + this.seedA) * this.len * 0.35 };
-    } else if (pointer.curious && this.curiosity > 0.62) {
+    if (!afraid && pointer.curious && this.curiosity > 0.62) {
       const pd = Math.hypot(pointer.x - head.x, pointer.y - head.y);
       if (pd < 340) {
         target = { x: pointer.x + Math.cos(time * 0.7 + this.seedB) * this.len * 0.45, y: pointer.y + Math.sin(time * 0.7 + this.seedB) * this.len * 0.45 };
@@ -134,16 +151,18 @@ class Koi {
 
     const desired = Math.atan2(wy, wx);
     // Turning rate scales with speed so koi sweep in wide arcs instead of curling up.
-    const turnRate = this.boost > 0.2 ? 4.5 : clamp(this.speed / (this.len * 0.5), 0.55, 2.2);
+    const turnRate = this.boost > 0.2 ? 5 : clamp(this.speed / (this.len * 0.5), 0.55, 2.2);
     const maxTurn = turnRate * dt;
     this.heading += clamp(angleDiff(this.heading, desired), -maxTurn, maxTurn);
 
-    let targetSpeed = this.cruise * (1 + this.boost * 2.4);
+    let targetSpeed = this.cruise * (1 + this.boost * 4);
     if (target) {
       const d = Math.hypot(target.x - head.x, target.y - head.y);
       targetSpeed *= clamp(d / 120, 0.55, 1.25);
     }
-    this.speed += (targetSpeed - this.speed) * Math.min(1, dt * 2.5);
+    // Startled koi accelerate almost instantly, then ease back to cruising.
+    const response = targetSpeed > this.speed && this.boost > 0.2 ? 7 : 2.5;
+    this.speed += (targetSpeed - this.speed) * Math.min(1, dt * response);
     this.boost *= Math.exp(-dt * 1.5);
 
     dx = Math.cos(this.heading);
@@ -516,15 +535,11 @@ function drawLotus(ctx, x, y, size, rot) {
 const LAYOUTS = {
   edges: [
     { fx: -0.015, fy: 0.3, r: 0.085, flower: true, rot: 0.4 },
-    { fx: 0.07, fy: 0.47, r: 0.05, rot: 2.6 },
-    { fx: 0.012, fy: 0.63, r: 0.065, flower: true, rot: 5.1 },
-    { fx: 0.08, fy: 0.82, r: 0.042, rot: 1.2 },
-    { fx: -0.01, fy: 0.95, r: 0.07, rot: 3.9 },
-    { fx: 1.02, fy: 0.16, r: 0.08, flower: true, rot: 2.2 },
-    { fx: 0.945, fy: 0.3, r: 0.045, rot: 4.4 },
-    { fx: 1.0, fy: 0.45, r: 0.055, rot: 0.9 },
-    { fx: 0.935, fy: 0.9, r: 0.052, flower: true, rot: 5.6 },
-    { fx: 1.01, fy: 0.78, r: 0.04, rot: 1.8 },
+    { fx: 0.06, fy: 0.5, r: 0.045, rot: 2.6 },
+    { fx: -0.01, fy: 0.9, r: 0.07, flower: true, rot: 3.9 },
+    { fx: 1.02, fy: 0.18, r: 0.08, flower: true, rot: 2.2 },
+    { fx: 0.95, fy: 0.34, r: 0.04, rot: 4.4 },
+    { fx: 0.985, fy: 0.84, r: 0.06, rot: 5.6 },
   ],
   corners: [
     { fx: 0.02, fy: 0.12, r: 0.06, flower: true, rot: 0.6 },
@@ -543,13 +558,13 @@ export function createLife(canvas, options) {
   let fish = [];
   let pads = [];
   let ripples = [];
-  let food = null;
+  let fears = [];
   let nextAmbient = rand(2, 5);
-  const pointer = { x: 0, y: 0, curious: false, lastMove: -10, speed: 0, inside: false };
+  const pointer = { x: 0, y: 0, curious: false, lastMove: -10, speed: 0, inside: false, calmUntil: 0 };
 
   const fishCount = () => {
     if (typeof options.fish === "number") return options.fish;
-    return clamp(Math.round((pond.width * pond.height) / 125000), 4, 8);
+    return clamp(Math.round((pond.width * pond.height) / 160000), 3, 7);
   };
 
   function populate() {
@@ -591,9 +606,10 @@ export function createLife(canvas, options) {
     },
 
     update(dt, time) {
-      pointer.curious = pointer.inside && pointer.speed < 260 && time - pointer.lastMove < 2.5;
-      const activeFood = food && time < food.end ? food : null;
-      for (const f of fish) f.update(dt, time, fish, pointer, activeFood);
+      fears = fears.filter((fear) => time < fear.until);
+      // After a tap, koi ignore the cursor for a while so they don't swim straight back to it.
+      pointer.curious = pointer.inside && pointer.speed < 260 && time - pointer.lastMove < 2.5 && time > pointer.calmUntil;
+      for (const f of fish) f.update(dt, time, fish, pointer, fears);
       for (const pad of pads) pad.update(dt);
       ripples = ripples.filter((r) => (r.age += dt) < r.life);
       if (options.ambient !== false && time > nextAmbient) {
@@ -654,12 +670,15 @@ export function createLife(canvas, options) {
 
     tap(x, y, time) {
       ripples.push({ x, y, age: 0, life: 2.2, scale: 1 });
+      const radius = clamp(Math.min(pond.width, pond.height) * 0.42, 190, 340);
+      fears.push({ x, y, radius, until: time + 4.5 });
+      if (fears.length > 4) fears.shift();
+      pointer.calmUntil = time + 7;
       for (const f of fish) {
         const d = Math.hypot(f.head.x - x, f.head.y - y);
-        if (d < 240) f.scare({ x, y }, 1.2 * (1 - d / 300));
+        if (d < radius) f.scare({ x, y }, 0.6 + 0.6 * (1 - d / radius));
       }
       for (const pad of pads) pad.push(x, y, 140);
-      food = { x, y, start: time + 1.1, end: time + 6 };
     },
   };
 }

@@ -115,27 +115,21 @@
   transform: translateY(-2px);
 }
 
-.work {
-  top: 22%;
-  right: 11%;
-  animation-delay: -1s;
-}
-
 .github {
-  top: 40%;
-  left: 7%;
+  top: 30%;
+  left: 9%;
   animation-delay: -3s;
 }
 
 .linkedin {
-  bottom: 17%;
-  left: 13%;
+  bottom: 20%;
+  left: 15%;
   animation-delay: -5s;
 }
 
 .hi {
-  top: 62%;
-  right: 8%;
+  top: 58%;
+  right: 10%;
   animation-delay: -2s;
 }
 
@@ -150,7 +144,7 @@
   font-size: 11px;
   letter-spacing: 0.2em;
   pointer-events: none;
-  animation: fadeIn 2s 1.2s both;
+  animation: hint 9s 1.5s both;
 }
 
 @keyframes rise {
@@ -162,6 +156,19 @@
 
 @keyframes fadeIn {
   from {
+    opacity: 0;
+  }
+}
+
+@keyframes hint {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  70% {
+    opacity: 1;
+  }
+  100% {
     opacity: 0;
   }
 }
