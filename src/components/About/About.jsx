@@ -7,19 +7,29 @@ export function About() {
   return (
     <section className="section" id="about" aria-labelledby="about-title">
       <div className={`page ${styles.grid}`}>
-        <Reveal className={styles.copy}>
-          <p className="eyebrow">About</p>
+        <Reveal className={styles.portrait}>
+          <span className={styles.ring} aria-hidden="true" />
+          <img
+            src={profile.photo}
+            alt="Shishir smiling in a beanie on a snowy mountain ridge"
+            width="640"
+            height="618"
+            loading="lazy"
+            decoding="async"
+          />
+        </Reveal>
+
+        <Reveal delay={100} className={styles.copy}>
+          <p className="eyebrow">about</p>
           <h2 id="about-title" className="section-title">
-            A little more <span className="gradient-text">about me.</span>
+            a little more <span className="gradient-text">about me</span>
           </h2>
           {profile.about.map((paragraph) => (
             <p key={paragraph} className={styles.paragraph}>
               {paragraph}
             </p>
           ))}
-        </Reveal>
 
-        <Reveal delay={100}>
           <ul className={styles.achievements} aria-label="Achievements and leadership">
             {achievements.map((item) => (
               <li key={item.title}>

@@ -9,7 +9,6 @@ import { Featured } from "./components/Featured/Featured";
 import { Hero } from "./components/Hero/Hero";
 import { Navbar } from "./components/Navbar/Navbar";
 import { ProjectDrawer } from "./components/ProjectDrawer/ProjectDrawer";
-import { Starfield } from "./components/Starfield/Starfield";
 import { Terminal } from "./components/Terminal/Terminal";
 import { UIContext, scrollToSection } from "./context/ui";
 import { projectBySlug } from "./data/projects";
@@ -103,7 +102,6 @@ function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Starfield />
       <Navbar />
       <main id="main">
         <Hero />

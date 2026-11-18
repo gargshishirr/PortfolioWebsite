@@ -55,7 +55,7 @@ const FEATURES = [
     slug: "adgate",
     layout: "wide",
     media: <AdGateVisual />,
-    note: "Illustration using AdGate's real reason codes",
+    note: "illustration using adgate's real reason codes",
   },
   {
     slug: "kharcha",
@@ -103,9 +103,9 @@ export function Featured() {
   return (
     <div className="page">
         <Reveal className="section-head">
-          <p className="eyebrow">Selected work</p>
+          <p className="eyebrow">selected work</p>
           <h2 id="work-title" className="section-title">
-            Things I&apos;ve built, <span className="gradient-text">built to hold up.</span>
+            things i&apos;ve <span className="gradient-text">built</span>
           </h2>
           <p className="section-lead">Side projects I build outside my day job.</p>
         </Reveal>
@@ -164,7 +164,9 @@ export function Featured() {
           })}
         </div>
 
-        <h3 className={styles.moreHeading}>More projects I&apos;m proud of</h3>
+        <h3 className={styles.moreHeading}>
+          more i&apos;m <em>proud of</em>
+        </h3>
         <ul className={styles.more}>
           {MORE.map((slug, index) => {
             const project = projectBySlug[slug];

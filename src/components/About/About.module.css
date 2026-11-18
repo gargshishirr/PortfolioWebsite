@@ -1,8 +1,48 @@
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  align-items: end;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  align-items: start;
   gap: clamp(40px, 7vw, 96px);
+}
+
+.portrait {
+  position: sticky;
+  top: calc(var(--nav-height) + 48px);
+  max-width: 400px;
+  width: 100%;
+  margin-inline: auto;
+  aspect-ratio: 1;
+}
+
+.portrait img {
+  position: relative;
+  width: 86%;
+  height: 86%;
+  margin: 7%;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: brightness(1.12) saturate(1.05);
+  box-shadow: 0 30px 70px -30px rgba(46, 34, 42, 0.5);
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(90, 43, 61, 0.28);
+  animation: spin 50s linear infinite;
+}
+
+.ring::after {
+  content: "";
+  position: absolute;
+  top: 14%;
+  right: 12%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--koi);
+  box-shadow: 0 0 0 4px rgba(184, 70, 31, 0.15);
 }
 
 .copy {
@@ -19,14 +59,13 @@
 
 .achievements {
   display: grid;
-  gap: 12px;
-}
-
-.achievements {
-  padding: 24px;
+  gap: 14px;
+  margin-top: 8px;
+  padding: 22px 24px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: var(--panel);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: var(--shadow-soft);
 }
 
 .achievements li {
@@ -42,6 +81,7 @@
 
 .achievementTitle {
   font-weight: 600;
+  color: var(--text);
 }
 
 .achievementDetail {
@@ -50,8 +90,21 @@
   line-height: 1.5;
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 860px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .portrait {
+    position: relative;
+    top: 0;
+    max-width: 240px;
+    margin: 0;
   }
 }

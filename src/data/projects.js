@@ -34,26 +34,26 @@ export const categories = [
   {
     id: "backend",
     label: "Backend & Tools",
-    constellation: "The Engine",
-    color: "var(--cyan)",
+    constellation: "the engine",
+    color: "var(--teal)",
   },
   {
     id: "products",
     label: "Full-stack Products",
-    constellation: "The Arena",
-    color: "var(--violet)",
+    constellation: "the arena",
+    color: "var(--koi)",
   },
   {
     id: "mobile",
     label: "Mobile & Frontend",
-    constellation: "The Pocket",
-    color: "var(--mint)",
+    constellation: "the garden",
+    color: "var(--lily)",
   },
   {
     id: "algorithms",
     label: "Algorithms & ML",
-    constellation: "The Lab",
-    color: "var(--pink)",
+    constellation: "the lab",
+    color: "var(--lotus)",
   },
 ];
 

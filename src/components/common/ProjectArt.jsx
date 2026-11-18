@@ -1,12 +1,18 @@
 import { categoryById } from "../../data/projects";
 import styles from "./ProjectArt.module.css";
 
-const PALETTE = {
-  backend: ["#5fe7f0", "#1b6f8a", "#07263a"],
-  products: ["#cdb9ff", "#6a4fd1", "#1d1147"],
-  mobile: ["#7cf2d6", "#1f9a80", "#05302a"],
-  algorithms: ["#ffc0d2", "#d1557f", "#3d0d22"],
+const TINT = {
+  backend: "#d3e4e3",
+  products: "#eadcd4",
+  mobile: "#d9e6d3",
+  algorithms: "#ead7de",
 };
+
+const KOI = [
+  { body: "#fbf6ef", spot: "#e4512a" },
+  { body: "#f1b53a", spot: "#fbe08a" },
+  { body: "#2b2830", spot: "#e5582c" },
+];
 
 const hash = (text) => {
   let value = 2166136261;
@@ -24,96 +30,76 @@ const seeded = (seed) => {
   };
 };
 
+const padPath = (cx, cy, r, notch) => {
+  const a1 = notch + 0.22;
+  const a2 = notch - 0.22;
+  return `M ${cx} ${cy} L ${cx + r * Math.cos(a1)} ${cy + r * Math.sin(a1)} A ${r} ${r} 0 1 1 ${cx + r * Math.cos(a2)} ${cy + r * Math.sin(a2)} Z`;
+};
+
 export function ProjectArt({ project, className = "" }) {
   const random = seeded(hash(project.slug));
-  const [light, mid, dark] = PALETTE[project.category];
   const id = `art-${project.slug}`;
-  const hasRing = random() > 0.35;
-  const ringTilt = -30 + random() * 60;
-  const planetX = 180 + random() * 140;
-  const planetY = 120 + random() * 40;
-  const radius = 62 + random() * 26;
-  const bands = Array.from({ length: 4 }, () => ({
-    y: -radius + random() * radius * 2,
-    h: 4 + random() * 12,
-    o: 0.08 + random() * 0.18,
+  const pads = Array.from({ length: 3 }, (_, i) => ({
+    cx: i === 0 ? 400 + random() * 60 : random() * 480,
+    cy: i === 0 ? 40 + random() * 60 : 160 + random() * 110,
+    r: i === 0 ? 62 + random() * 20 : 26 + random() * 22,
+    notch: random() * Math.PI * 2,
   }));
-  const stars = Array.from({ length: 34 }, () => ({
-    x: random() * 480,
-    y: random() * 270,
-    r: 0.4 + random() * 1.2,
-    o: 0.25 + random() * 0.6,
-  }));
+  const koi = KOI[Math.floor(random() * KOI.length)];
+  const fishX = 150 + random() * 160;
+  const fishY = 100 + random() * 70;
+  const fishAngle = -40 + random() * 80;
   const initials = project.title
     .split(/\s+/)
     .map((word) => word[0])
     .join("")
-    .slice(0, 2);
+    .slice(0, 2)
+    .toLowerCase();
 
   return (
     <div className={`${styles.art} ${className}`} aria-hidden="true">
       <svg viewBox="0 0 480 270" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <radialGradient id={`${id}-sky`} cx="70%" cy="20%" r="90%">
-            <stop offset="0%" stopColor={dark} />
-            <stop offset="100%" stopColor="#04050b" />
+          <radialGradient id={`${id}-water`} cx="35%" cy="30%" r="90%">
+            <stop offset="0%" stopColor="#f4f6f2" />
+            <stop offset="100%" stopColor={TINT[project.category]} />
           </radialGradient>
-          <radialGradient id={`${id}-planet`} cx="35%" cy="30%" r="75%">
-            <stop offset="0%" stopColor={light} />
-            <stop offset="55%" stopColor={mid} />
-            <stop offset="100%" stopColor={dark} />
+          <radialGradient id={`${id}-pad`} cx="38%" cy="35%" r="70%">
+            <stop offset="0%" stopColor="#b3da92" />
+            <stop offset="60%" stopColor="#7fb764" />
+            <stop offset="100%" stopColor="#4f8c45" />
           </radialGradient>
-          <clipPath id={`${id}-clip`}>
-            <circle cx={planetX} cy={planetY} r={radius} />
-          </clipPath>
         </defs>
-        <rect width="480" height="270" fill={`url(#${id}-sky)`} />
-        {stars.map((star, index) => (
-          <circle key={index} cx={star.x} cy={star.y} r={star.r} fill="#fff" opacity={star.o} />
-        ))}
-        <circle cx={planetX} cy={planetY} r={radius * 1.9} fill={light} opacity="0.06" />
-        {hasRing && (
+        <rect width="480" height="270" fill={`url(#${id}-water)`} />
+        {Array.from({ length: 7 }, (_, i) => (
           <ellipse
-            cx={planetX}
-            cy={planetY}
-            rx={radius * 1.75}
-            ry={radius * 0.38}
-            transform={`rotate(${ringTilt} ${planetX} ${planetY})`}
+            key={i}
+            cx={random() * 480}
+            cy={random() * 270}
+            rx={40 + random() * 50}
+            ry={24 + random() * 30}
             fill="none"
-            stroke={light}
-            strokeOpacity="0.35"
-            strokeWidth="5"
-          />
-        )}
-        <circle cx={planetX} cy={planetY} r={radius} fill={`url(#${id}-planet)`} />
-        <g clipPath={`url(#${id}-clip)`}>
-          {bands.map((band, index) => (
-            <rect
-              key={index}
-              x={planetX - radius}
-              y={planetY + band.y}
-              width={radius * 2}
-              height={band.h}
-              fill="#fff"
-              opacity={band.o}
-            />
-          ))}
-        </g>
-        {hasRing && (
-          <path
-            d={`M ${planetX - radius * 1.75} ${planetY} A ${radius * 1.75} ${radius * 0.38} 0 0 0 ${planetX + radius * 1.75} ${planetY}`}
-            transform={`rotate(${ringTilt} ${planetX} ${planetY})`}
-            fill="none"
-            stroke={light}
+            stroke="#ffffff"
             strokeOpacity="0.55"
-            strokeWidth="5"
+            strokeWidth="2"
           />
-        )}
-        <text x="28" y="246" className={styles.mono} fill={light}>
+        ))}
+        <g transform={`translate(${fishX} ${fishY}) rotate(${fishAngle})`}>
+          <path d="M-58 0 C-48 -16 -10 -18 18 -9 C30 -5 38 -2 44 0 C38 2 30 5 18 9 C-10 18 -48 16 -58 0 Z" fill={koi.body} />
+          <path d="M42 0 C54 -14 66 -16 72 -14 C64 -6 64 6 72 14 C66 16 54 14 42 0 Z" fill={koi.body} opacity="0.65" />
+          <ellipse cx="-24" cy="-2" rx="13" ry="7" fill={koi.spot} />
+          <ellipse cx="6" cy="2" rx="9" ry="5" fill={koi.spot} />
+          <circle cx="-49" cy="-5" r="1.8" fill="#231a1f" />
+          <circle cx="-49" cy="5" r="1.8" fill="#231a1f" />
+        </g>
+        {pads.map((pad, index) => (
+          <path key={index} d={padPath(pad.cx, pad.cy, pad.r, pad.notch)} fill={`url(#${id}-pad)`} />
+        ))}
+        <text x="28" y="246" className={styles.mono}>
           {initials}
         </text>
-        <text x="28" y="40" className={styles.label} fill={light}>
-          {categoryById[project.category].constellation.toUpperCase()}
+        <text x="30" y="40" className={styles.label}>
+          {categoryById[project.category].constellation}
         </text>
       </svg>
     </div>

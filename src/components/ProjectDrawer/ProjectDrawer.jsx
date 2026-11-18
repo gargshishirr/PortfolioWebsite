@@ -57,7 +57,10 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
 
   useEffect(() => {
     const dialog = dialogRef.current;
-    if (project && !dialog.open) dialog.showModal();
+    if (project && !dialog.open) {
+      dialog.showModal();
+      dialog.querySelector("[data-autofocus]")?.focus();
+    }
     else if (!project && dialog.open) dialog.close();
   }, [project]);
 
@@ -105,7 +108,7 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
               <button type="button" onClick={() => onNavigate(next.slug)} aria-label={`Next project: ${next.title}`}>
                 →
               </button>
-              <button type="button" className={styles.close} onClick={onClose} aria-label="Close project details" autoFocus>
+              <button type="button" className={styles.close} onClick={onClose} aria-label="Close project details" data-autofocus>
                 ✕
               </button>
             </div>

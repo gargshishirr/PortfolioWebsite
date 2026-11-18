@@ -1,32 +1,43 @@
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --bg: #04050b;
-  --bg-raised: #0a0e1b;
-  --panel: rgba(14, 19, 36, 0.72);
-  --panel-solid: #0d1222;
-  --panel-hover: rgba(22, 29, 54, 0.85);
-  --line: rgba(150, 168, 220, 0.14);
-  --line-strong: rgba(150, 168, 220, 0.28);
+  --bg: #eef2ef;
+  --bg-raised: #f6f7f3;
+  --paper: #fbfaf6;
+  --panel: rgba(255, 255, 255, 0.78);
+  --panel-solid: #ffffff;
+  --panel-hover: #ffffff;
+  --line: rgba(74, 44, 58, 0.11);
+  --line-strong: rgba(74, 44, 58, 0.22);
 
-  --text: #edf1fa;
-  --muted: #a3aec8;
-  --subtle: #7d89a6;
+  --text: #2a232c;
+  --muted: #574f5a;
+  --subtle: #6e6671;
+  --plum: #5a2b3d;
+  --plum-soft: #8a4660;
 
-  --cyan: #5fe7f0;
-  --violet: #b79fff;
-  --mint: #4ee6c4;
-  --pink: #ff9ab7;
-  --amber: #ffcf7a;
+  --teal: #27747a;
+  --koi: #b8461f;
+  --lily: #3f7a3c;
+  --lotus: #b04a6c;
+  --gold: #a06a12;
 
-  --font-display: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
+  /* Older names kept as aliases for the pond palette. */
+  --cyan: var(--teal);
+  --violet: var(--plum-soft);
+  --mint: var(--lily);
+  --pink: var(--lotus);
+  --amber: var(--gold);
+
+  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-body: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --radius-sm: 10px;
   --radius: 18px;
-  --radius-lg: 28px;
-  --shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  --radius-lg: 26px;
+  --shadow: 0 24px 60px -28px rgba(60, 40, 50, 0.35);
+  --shadow-soft: 0 10px 30px -16px rgba(60, 40, 50, 0.25);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   --page: min(1200px, 100% - 48px);
@@ -52,7 +63,10 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--bg);
+  background:
+    radial-gradient(70% 40% at 85% 0%, rgba(231, 214, 222, 0.55), transparent 70%),
+    radial-gradient(60% 40% at 0% 45%, rgba(210, 228, 222, 0.6), transparent 70%),
+    var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 16px;
@@ -91,7 +105,7 @@ ol {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(150, 168, 220, 0.28) transparent;
+  scrollbar-color: rgba(74, 44, 58, 0.25) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -106,20 +120,20 @@ ol {
 ::-webkit-scrollbar-thumb {
   border: 3px solid transparent;
   border-radius: 999px;
-  background: rgba(150, 168, 220, 0.28) padding-box;
+  background: rgba(74, 44, 58, 0.22) padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(150, 168, 220, 0.45);
+  background-color: rgba(74, 44, 58, 0.38);
 }
 
 ::selection {
-  background: rgba(95, 231, 240, 0.32);
-  color: #fff;
+  background: rgba(228, 104, 58, 0.22);
+  color: var(--text);
 }
 
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--koi);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -143,8 +157,8 @@ ol {
   z-index: 100;
   padding: 10px 16px;
   border-radius: 999px;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--plum);
+  color: var(--paper);
   font-weight: 600;
   text-decoration: none;
   transform: translateY(-160%);
@@ -179,25 +193,27 @@ ol {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--cyan);
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  color: var(--teal);
 }
 
 .eyebrow::before {
   content: "";
-  width: 28px;
-  height: 1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
   background: currentColor;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(34px, 5.4vw, 60px);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-size: clamp(42px, 6.4vw, 76px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  color: var(--plum);
 }
 
 .section-lead {
@@ -206,11 +222,12 @@ ol {
   max-width: 62ch;
 }
 
+/* Emphasis inside headings: an italic serif word, like a signature. */
 .gradient-text {
-  background: linear-gradient(100deg, var(--cyan), var(--violet) 45%, var(--pink));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--plum-soft);
 }
 
 .button {
@@ -218,15 +235,18 @@ ol {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 48px;
+  min-height: 46px;
   padding: 0 22px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.04);
-  font-weight: 600;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text);
+  font-weight: 500;
   font-size: 15px;
   text-decoration: none;
   white-space: nowrap;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition:
     transform 0.25s var(--ease-out),
     background 0.25s,
@@ -235,21 +255,23 @@ ol {
 }
 
 .button:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: #fff;
+  border-color: rgba(74, 44, 58, 0.35);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
 }
 
 .button-primary {
   border-color: transparent;
-  background: linear-gradient(100deg, var(--cyan), var(--violet));
-  color: #060814;
-  box-shadow: 0 10px 40px -10px rgba(95, 231, 240, 0.55);
+  background: var(--plum);
+  color: #fdf8f3;
+  box-shadow: 0 12px 30px -14px rgba(90, 43, 61, 0.65);
 }
 
 .button-primary:hover {
-  background: linear-gradient(100deg, #8ff2f7, #cbb8ff);
-  box-shadow: 0 16px 50px -12px rgba(95, 231, 240, 0.7);
+  background: #6d3549;
+  border-color: transparent;
+  box-shadow: 0 16px 36px -14px rgba(90, 43, 61, 0.7);
 }
 
 .chip {
@@ -259,7 +281,7 @@ ol {
   padding: 5px 11px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.7);
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 12px;
@@ -276,7 +298,7 @@ kbd {
   border-radius: 6px;
   border: 1px solid var(--line-strong);
   border-bottom-width: 2px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.8);
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text);
@@ -311,7 +333,7 @@ html:has(dialog[open]) {
 }
 
 dialog::backdrop {
-  background: rgba(2, 3, 9, 0.62);
+  background: rgba(46, 34, 42, 0.28);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }

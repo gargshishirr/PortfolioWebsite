@@ -76,9 +76,9 @@ export function Experience() {
     <section className="section" id="experience" aria-labelledby="experience-title">
       <div className="page">
         <Reveal className="section-head">
-          <p className="eyebrow">Flight log</p>
+          <p className="eyebrow">experience</p>
           <h2 id="experience-title" className="section-title">
-            Where I&apos;ve <span className="gradient-text">worked and learned.</span>
+            where i&apos;ve <span className="gradient-text">worked</span>
           </h2>
         </Reveal>
 

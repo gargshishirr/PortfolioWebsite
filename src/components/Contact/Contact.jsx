@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { profile } from "../../data/profile";
 import { Reveal } from "../common/Reveal";
+import { Pond } from "../Pond/Pond";
 import styles from "./Contact.module.css";
 
 export function Contact() {
@@ -26,10 +27,10 @@ export function Contact() {
     <section className="section" id="contact" aria-labelledby="contact-title">
       <div className="page">
         <Reveal className={styles.panel}>
-          <div className={styles.glow} aria-hidden="true" />
-          <p className="eyebrow">Open channel</p>
+          <Pond fish={3} pads="corners" />
+          <p className="eyebrow">say hello</p>
           <h2 id="contact-title" className={styles.title}>
-            Let&apos;s build something
+            let&apos;s build something
             <br />
             <span className="gradient-text">that doesn&apos;t fall over.</span>
           </h2>

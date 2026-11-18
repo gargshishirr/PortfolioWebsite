@@ -6,7 +6,22 @@ import { useMediaQuery } from "../../hooks/hooks";
 import { ProjectArt } from "../common/ProjectArt";
 import { Reveal } from "../common/Reveal";
 import styles from "./Constellation.module.css";
-import { DUST, EDGES, LABELS, POSITIONS, VIEW } from "./layout";
+import { Pond } from "../Pond/Pond";
+import { LABELS, POSITIONS, VIEW } from "./layout";
+
+function Lotus() {
+  return (
+    <svg className={styles.lotus} viewBox="-10 -10 20 20" aria-hidden="true">
+      {Array.from({ length: 8 }, (_, i) => (
+        <ellipse key={i} cx="0" cy="-5" rx="2.6" ry="5" fill="#f2a7bb" transform={`rotate(${i * 45})`} />
+      ))}
+      {Array.from({ length: 6 }, (_, i) => (
+        <ellipse key={`inner-${i}`} cx="0" cy="-3.2" rx="1.8" ry="3.4" fill="#fbd6e0" transform={`rotate(${i * 60 + 20})`} />
+      ))}
+      <circle r="1.8" fill="#f5cf5a" />
+    </svg>
+  );
+}
 
 const matches = (project, filter) => {
   if (filter.type === "category") return project.category === filter.value;
@@ -21,49 +36,27 @@ function StarMap({ visible, onOpen }) {
   return (
     <div className={styles.mapFrame}>
       <div className={styles.map} onPointerLeave={() => setHovered(null)}>
-        <svg
-          className={styles.lines}
-          viewBox={`0 0 ${VIEW.width} ${VIEW.height}`}
-          aria-hidden="true"
-        >
-          {DUST.map((star, index) => (
-            <circle key={index} cx={star.x} cy={star.y} r={star.r} fill="#fff" opacity={star.o} />
-          ))}
+        <Pond fish={4} pads="none" ambient={false} />
+        <ul className={styles.labels} aria-hidden="true">
           {categories.map((category) => {
             const [x, y] = LABELS[category.id];
             return (
-              <g key={category.id} className={styles.constellationLabel}>
-                <text x={x} y={y} fill={category.color}>
-                  {category.constellation.toUpperCase()}
-                </text>
-              </g>
+              <li
+                key={category.id}
+                style={{
+                  left: `${(x / VIEW.width) * 100}%`,
+                  top: `${(y / VIEW.height) * 100}%`,
+                  color: category.color,
+                }}
+              >
+                {category.constellation}
+              </li>
             );
           })}
-          {EDGES.map(([from, to]) => {
-            const a = projectBySlug[from];
-            const lit = visible.has(from) && visible.has(to);
-            const focus = hoveredProject && hoveredProject.category === a.category;
-            const [x1, y1] = POSITIONS[from];
-            const [x2, y2] = POSITIONS[to];
-            return (
-              <line
-                key={`${from}-${to}`}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke={categoryById[a.category].color}
-                className={styles.edge}
-                data-lit={lit}
-                data-focus={Boolean(focus)}
-                pathLength="1"
-              />
-            );
-          })}
-        </svg>
+        </ul>
 
         <ul className={styles.stars}>
-          {projects.map((project) => {
+          {projects.map((project, index) => {
             const [x, y] = POSITIONS[project.slug];
             const category = categoryById[project.category];
             const isVisible = visible.has(project.slug);
@@ -75,6 +68,7 @@ function StarMap({ visible, onOpen }) {
                   left: `${(x / VIEW.width) * 100}%`,
                   top: `${(y / VIEW.height) * 100}%`,
                   "--accent": category.color,
+                  "--notch": `${(index * 137) % 360}deg`,
                 }}
                 data-dim={!isVisible}
                 data-featured={project.featured}
@@ -90,6 +84,7 @@ function StarMap({ visible, onOpen }) {
                   aria-label={`${project.title}: ${project.tagline} ${category.label}, ${project.year}.`}
                 >
                   <span className={styles.dot} aria-hidden="true" />
+                  {project.featured && <Lotus />}
                   <span className={styles.starLabel} aria-hidden="true">
                     {project.title}
                   </span>
@@ -134,7 +129,7 @@ function Preview({ project, position }) {
       <p className={styles.previewTitle}>{project.title}</p>
       <p className={styles.previewTagline}>{project.tagline}</p>
       <p className={styles.previewStack}>{project.stack.slice(0, 4).join(" · ")}</p>
-      <p className={styles.previewHint}>Click to open the dossier →</p>
+      <p className={styles.previewHint}>Click to open →</p>
     </div>
   );
 }
@@ -192,8 +187,12 @@ export function Constellation() {
     <div className={`page ${styles.block}`} id="projects">
       <Reveal className={styles.head}>
         <div>
-          <h3 className={styles.heading}>All {projects.length} projects, mapped as a constellation</h3>
-          <p className={styles.sub}>Open any project for screenshots and details.</p>
+          <h3 className={styles.heading}>
+            the whole <em>pond</em>
+          </h3>
+          <p className={styles.sub}>
+            All {projects.length} projects float here as lily pads. Hover one to peek, click to open.
+          </p>
         </div>
         <div className={styles.viewToggle} role="group" aria-label="View">
           {["map", "list"].map((option) => (
