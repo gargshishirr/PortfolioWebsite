@@ -65,23 +65,6 @@
   margin-bottom: 4%;
 }
 
-.visual {
-  height: 100%;
-}
-
-.visual > div {
-  height: 100%;
-  padding: 16px;
-  gap: 10px;
-  border: 0;
-  border-radius: 0;
-  font-size: 11px;
-}
-
-.visual li:nth-child(n + 4) {
-  display: none;
-}
-
 .body {
   display: flex;
   flex-direction: column;

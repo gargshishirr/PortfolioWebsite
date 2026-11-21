@@ -1,6 +1,13 @@
-import accessdeskApproval from "../assets/projects/accessdesk-approval.webp";
 import accessdeskAudit from "../assets/projects/accessdesk-audit.webp";
+import accessdeskHome from "../assets/projects/accessdesk-home.webp";
 import accessdeskMobile from "../assets/projects/accessdesk-mobile.webp";
+import accessdeskRequest from "../assets/projects/accessdesk-request.webp";
+import accessdeskSignin from "../assets/projects/accessdesk-signin.webp";
+import accessdeskTimeline from "../assets/projects/accessdesk-timeline.webp";
+import adgateChaos from "../assets/projects/adgate-chaos.webp";
+import adgateExplain from "../assets/projects/adgate-explain.webp";
+import adgateMobile from "../assets/projects/adgate-mobile.webp";
+import adgatePlayground from "../assets/projects/adgate-playground.webp";
 import boggleRun from "../assets/projects/boggle-run.webp";
 import codebattleAccepted from "../assets/projects/codebattle-accepted.webp";
 import codebattleBattle from "../assets/projects/codebattle-battle.webp";
@@ -64,9 +71,9 @@ export const projects = [
     year: 2026,
     featured: true,
     visibility: "public",
-    tagline: "Real-time ad eligibility that fails closed, and tells you why.",
+    tagline: "Real-time ad eligibility that fails closed. Try breaking it in your browser.",
     summary:
-      "The gate an ad server calls inline on every request. In a few milliseconds it decides which candidate ads may serve, enforcing daily budgets and even pacing from a near-real-time Kafka spend pipeline, placement and keyword policy, and invalid-traffic checks. If any signal is missing, stale or unreachable, it declines with a structured reason code instead of serving optimistically.",
+      "The gate an ad server calls inline on every request. In a few milliseconds it decides which candidate ads may serve, enforcing daily budgets and even pacing from a near-real-time Kafka spend pipeline, placement and keyword policy, and invalid-traffic checks. If any signal is missing, stale or unreachable, it declines with a structured reason code instead of serving optimistically. A browser playground lets anyone send requests, fast-forward the day and break Redis or Kafka to watch it fail closed.",
     stack: [
       "Java",
       "Spring Boot",
@@ -77,8 +84,12 @@ export const projects = [
       "Prometheus",
       "Grafana",
       "Docker",
+      "TypeScript",
+      "Vite",
     ],
     highlights: [
+      "A live playground runs the real decision rules in the browser, ported to TypeScript and proven identical to the Java engine on 906 golden test vectors.",
+      "In the playground, chaos switches take down Redis, slow it, stall the spend pipeline or a single Kafka partition, and an Explain panel shows all 13 rules a decision went through.",
       "One pipelined Redis round trip on the hot path returns an atomic snapshot of spend, partition watermarks and the device's traffic counter.",
       "Effectively-once spend accounting: at-least-once Kafka delivery feeds an idempotent Redis Lua ledger.",
       "Per-partition low watermarks prove spend freshness, so a stalled partition fails closed only the campaigns it carries.",
@@ -91,8 +102,16 @@ export const projects = [
       { value: "495 / 495", label: "charges applied exactly once through a 21 s Redis outage" },
       { value: "15,749", label: "decision records published, 0 dropped" },
     ],
-    links: { source: `${GITHUB}/adgate` },
-    images: [],
+    links: {
+      live: "https://gargshishirr.github.io/adgate/",
+      source: `${GITHUB}/adgate`,
+    },
+    images: [
+      { src: adgatePlayground, kind: "desktop", alt: "AdGate playground: a request composer, live traffic with spend tracking the even-pacing line, and chaos switches" },
+      { src: adgateExplain, kind: "desktop", alt: "AdGate playground Explain panel: a PACING_THROTTLED decline with all 13 engine rules checked in order" },
+      { src: adgateChaos, kind: "desktop", alt: "AdGate playground with slow Redis and a stalled Kafka partition switched on, and decisions failing closed with DEADLINE_EXCEEDED and SPEND_DATA_STALE" },
+      { src: adgateMobile, kind: "phone", alt: "AdGate playground on a phone" },
+    ],
   },
   {
     slug: "codebattle",
@@ -256,11 +275,13 @@ export const projects = [
     year: 2026,
     featured: false,
     visibility: "public",
-    tagline: "Just-in-time access requests with a tamper-evident audit log.",
+    tagline: "Temporary access, approved by the right people, ending on its own.",
     summary:
-      "Employees request temporary access to internal systems, the right approvers say yes or no, access ends on its own, and every change lands in a hash-chained audit log. Built to WCAG 2.2 AA with zero JavaScript.",
+      "Employees request temporary access to internal systems, the right approvers say yes or no, access ends on its own, and every change lands in a hash-chained audit log. A guided demo walks you through the whole flow in about 60 seconds, signing you in as each person with one click. Built to WCAG 2.2 AA with zero JavaScript.",
     stack: ["Python", "FastAPI", "SQLite", "Hypothesis", "Playwright", "axe-core", "Prometheus"],
     highlights: [
+      "A 60-second guided demo: one-click sign-in as the requester, their manager, the system owner and security, with a checklist that ticks off from real data.",
+      "Before you submit, the form shows exactly who must approve and why, derived from the real policy and tested against it.",
       "A property-tested policy routes approvals by resource sensitivity and role. Critical and admin access always add security.",
       "Four-eyes by construction, and separation-of-duties rules re-checked at final approval, so parallel approvals can never combine into a forbidden pair.",
       "Grants expire automatically: the check API refuses access the second a grant expires, even before the sweeper runs.",
@@ -268,15 +289,18 @@ export const projects = [
       "Concurrency-safe with BEGIN IMMEDIATE and versioned requests. Strict CSP, CSRF tokens and open-redirect protection.",
     ],
     metrics: [
-      { value: "2.2 AA", label: "WCAG target" },
+      { value: "60 s", label: "guided demo of the full flow" },
+      { value: "265", label: "tests, incl. 36 browser accessibility checks" },
       { value: "0 KB", label: "JavaScript shipped" },
-      { value: "SHA-256", label: "hash-chained audit log" },
     ],
     links: { source: `${GITHUB}/accessdesk` },
     images: [
-      { src: accessdeskApproval, kind: "desktop", alt: "AccessDesk approval page for a payroll admin console request" },
-      { src: accessdeskAudit, kind: "desktop", alt: "AccessDesk audit log with a verified hash chain" },
-      { src: accessdeskMobile, kind: "phone", alt: "AccessDesk request details on a narrow mobile screen" },
+      { src: accessdeskSignin, kind: "desktop", alt: "AccessDesk demo sign-in with a guided-demo button and one-click persona cards for the requester, manager, resource owner and security reviewer" },
+      { src: accessdeskHome, kind: "desktop", alt: "AccessDesk home with the 60-second guided checklist on step 3 and the requester's active access" },
+      { src: accessdeskRequest, kind: "desktop", alt: "AccessDesk request form for Production Database with role cards, duration presets and a summary of who will approve" },
+      { src: accessdeskTimeline, kind: "desktop", alt: "AccessDesk request timeline: requested, approved by the manager and the owner, granted, and ending on its own" },
+      { src: accessdeskAudit, kind: "desktop", alt: "AccessDesk audit log with the hash chain verified" },
+      { src: accessdeskMobile, kind: "phone", alt: "AccessDesk home on a phone" },
     ],
   },
   {
