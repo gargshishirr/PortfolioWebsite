@@ -4,22 +4,11 @@ import { useUI } from "../../context/ui";
 import { profile } from "../../data/profile";
 import { categoryById, projectBySlug, projects } from "../../data/projects";
 import { ProjectArt } from "../common/ProjectArt";
-import { AdGateVisual } from "../visuals/AdGateVisual";
 import styles from "./ProjectDrawer.module.css";
-
-const VISUALS = { adgate: AdGateVisual };
 
 function Gallery({ project }) {
   const [active, setActive] = useState(0);
-  const Visual = VISUALS[project.slug];
 
-  if (Visual) {
-    return (
-      <div className={styles.visual}>
-        <Visual />
-      </div>
-    );
-  }
   if (!project.images.length) {
     return <ProjectArt project={project} className={styles.art} />;
   }

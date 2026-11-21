@@ -2,7 +2,6 @@ import { useUI } from "../../context/ui";
 import codebattleFocus from "../../assets/projects/codebattle-focus.webp";
 import { categoryById, projectBySlug } from "../../data/projects";
 import { Reveal } from "../common/Reveal";
-import { AdGateVisual } from "../visuals/AdGateVisual";
 import styles from "./Featured.module.css";
 
 const SELECTED = [
@@ -18,13 +17,6 @@ const SELECTED = [
 ];
 
 function Cover({ project }) {
-  if (project.slug === "adgate") {
-    return (
-      <div className={styles.visual}>
-        <AdGateVisual />
-      </div>
-    );
-  }
   if (project.slug === "kharcha") {
     return (
       <div className={styles.phones}>

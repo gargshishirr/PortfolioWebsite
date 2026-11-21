@@ -126,7 +126,6 @@
 }
 
 .gallery,
-.visual,
 .art {
   margin-top: 32px;
 }
@@ -135,10 +134,6 @@
   aspect-ratio: 16 / 9;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-}
-
-.visual > * {
-  min-height: 300px;
 }
 
 .stage {
@@ -346,8 +341,3 @@
   }
 }
 
-@media (max-width: 640px) {
-  .visual > * {
-    min-height: 0;
-  }
-}
