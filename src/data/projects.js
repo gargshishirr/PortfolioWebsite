@@ -18,7 +18,7 @@ import medrecordsCard from "../assets/projects/medrecords-card.webp";
 import medrecordsLabs from "../assets/projects/medrecords-labs.webp";
 import medrecordsMobile from "../assets/projects/medrecords-mobile.webp";
 import medrecordsOverview from "../assets/projects/medrecords-overview.webp";
-import medrecordsRecords from "../assets/projects/medrecords-records.webp";
+import medrecordsSummary from "../assets/projects/medrecords-summary.webp";
 import kharchaAdd from "../assets/projects/kharcha-add.webp";
 import kharchaHistory from "../assets/projects/kharcha-history.webp";
 import kharchaInsights from "../assets/projects/kharcha-insights.webp";
@@ -441,19 +441,19 @@ export const projects = [
     visibility: "public",
     tagline: "Your family's health, in one calm place.",
     summary:
-      "A personal health-record hub for a whole family. Switch between profiles to see vitals with live status, a daily medication checklist, a searchable record timeline, lab trends against reference ranges, and a printable emergency card. Everything runs in the browser, with no server and no account.",
-    stack: ["React", "TypeScript", "Vite", "React Router", "CSS Modules", "SVG", "Vitest", "Testing Library", "GitHub Actions"],
+      "A private health-record app for a whole family. Profiles hold vitals with live status, a medication checklist with reminders, records with encrypted photos and PDFs, lab trends against reference ranges, a children's vaccine schedule, a one-page doctor summary and a printable emergency card. It installs like an app, works offline, and keeps everything in the browser, with no server and no account.",
+    stack: ["React", "TypeScript", "Vite", "WebCrypto", "IndexedDB", "Service Worker", "React Router", "Vitest", "GitHub Actions"],
     highlights: [
-      "A dashboard of vitals cards with SVG sparklines and Normal, Watch or High status from age- and sex-aware reference ranges.",
-      "A records timeline grouped by month, with type filters, search, a detail panel and a validated, accessible “Add record” form.",
-      "Hand-built SVG lab charts that shade the reference range, flag out-of-range points, and offer keyboard-focusable tooltips and a data-table fallback.",
-      "A medication checklist that persists per day, with a 7-day adherence ring and refill countdowns that warn as supply runs low.",
-      "A printable emergency ID card with a QR code holding a plain-text summary, a ⌘K command palette and light, dark or system themes.",
-      "Works from 360 px up, uses native <dialog> modals, meets WCAG AA contrast in both themes, and is covered by 38 Vitest tests.",
+      "Photos and PDFs attached to records are checked by their bytes, shrunk and stripped of GPS data, then encrypted with AES-GCM in IndexedDB.",
+      "An optional passcode lock (PBKDF2 + AES-GCM) encrypts everything at rest, and backups carry the files without ever exporting the key.",
+      "Reminders through .ics calendar files with alarms, plus notifications while open, and warnings when a new medicine clashes with an allergy.",
+      "A one-page doctor summary to print or save as PDF, and a children's vaccine schedule that works out what is due from the birth date.",
+      "Hand-built SVG lab charts that shade the reference range and flag out-of-range points, with keyboard tooltips and a table fallback.",
+      "Installs as a PWA and works offline, meets WCAG AA in both themes, and is covered by 119 Vitest tests.",
     ],
     metrics: [
       { value: "3", label: "family profiles with 18 months of history" },
-      { value: "38", label: "Vitest tests" },
+      { value: "119", label: "Vitest tests" },
       { value: "0", label: "servers: data stays in your browser" },
     ],
     links: {
@@ -461,10 +461,10 @@ export const projects = [
       source: `${GITHUB}/MedRecords`,
     },
     images: [
-      { src: medrecordsOverview, kind: "desktop", alt: "MedRecords overview: vitals cards with sparklines and status pills, today's medication checklist and upcoming appointments" },
+      { src: medrecordsOverview, kind: "desktop", alt: "MedRecords overview: vitals cards with sparklines and status pills, today's medication checklist, upcoming appointments and latest lab results" },
+      { src: medrecordsSummary, kind: "desktop", alt: "MedRecords doctor summary: one page with allergies, conditions, current medicines, flagged lab results, latest readings and recent visits" },
       { src: medrecordsLabs, kind: "desktop", alt: "MedRecords lab trends: an LDL cholesterol line chart with a shaded reference range and a highlighted out-of-range point" },
       { src: medrecordsCard, kind: "desktop", alt: "MedRecords emergency card with blood group, allergies, conditions, medications, emergency contacts and a QR code" },
-      { src: medrecordsRecords, kind: "desktop", alt: "MedRecords records timeline grouped by month with filter chips for visits, labs, prescriptions, imaging, vaccinations and documents" },
       { src: medrecordsMobile, kind: "phone", alt: "MedRecords overview on a phone with vitals cards and a bottom tab bar" },
     ],
   },
