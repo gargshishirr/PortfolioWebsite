@@ -20,6 +20,7 @@ export const experience = [
       { value: "~7,000", label: "nodes running my Redis cache" },
     ],
     points: [
+      "Designed and implemented a sorted, disk-backed permissions index (an SSTable), validated at 10,000 roles and about 5 million index entries, so access checks no longer rebuild in-memory radix trees or scan subtrees.",
       "Shipped granular role-management CRUD APIs for OneLake's RBAC platform, replacing coarse batch updates with per-role operations to cut role-mutation payloads by 90% and enable safe concurrent edits.",
       "Cut p99 latency of partner APIs by 96% by parallelizing service fan-out and adding an ETag-versioned cache, reducing per-table security lookups from O(N) to O(1).",
       "Built service-to-service OneSecurity APIs (row/column security, role metadata, RLS bitmaps) that SQL, Kusto, Spark and Power BI call at query time, enforcing RBAC across 4+ engines at billions of requests a month.",

@@ -9,8 +9,7 @@ export const profile = {
   location: "India",
   photo,
   email: "gargshishirr@gmail.com",
-  resume:
-    "https://drive.google.com/file/d/1s2BG52Thgxuz6uA54qMmyhRoPQHB5m4M/view?usp=drive_link",
+  resume: `${import.meta.env.BASE_URL}Shishir-Garg-Resume.pdf`,
   education: {
     degree: "B.Tech, Computer Engineering",
     school: "Delhi Technological University",
