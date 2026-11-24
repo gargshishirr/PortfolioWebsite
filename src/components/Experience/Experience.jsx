@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { experience } from "../../data/experience";
 import { profile } from "../../data/profile";
+import { GraduationCap } from "../common/Icons";
 import { Reveal } from "../common/Reveal";
 import styles from "./Experience.module.css";
 
@@ -14,23 +15,19 @@ function Role({ item }) {
   const listId = `points-${item.organisation}-${item.start}`.replace(/\W+/g, "-");
 
   return (
-    <article className={styles.card}>
-      <header className={styles.cardHead}>
+    <article className={styles.role}>
+      <header className={styles.head}>
         <span className={styles.logo}>
           <img src={item.logo} alt="" width="40" height="40" />
         </span>
         <div className={styles.titles}>
-          <h3>
-            {item.role}
-            <span className={styles.at}> · {item.organisation}</span>
-          </h3>
-          {item.team && <p className={styles.team}>{item.team}</p>}
+          <h3>{item.role}</h3>
+          <p>
+            <strong>{item.organisation}</strong>
+            {item.team && <span> · {item.team}</span>}
+          </p>
         </div>
-        {item.current && (
-          <span className={styles.now}>
-            <i aria-hidden="true" /> Current
-          </span>
-        )}
+        {item.current && <span className={styles.now}>Current</span>}
       </header>
 
       {item.summary && <p className={styles.summary}>{item.summary}</p>}
@@ -61,55 +58,58 @@ function Role({ item }) {
           onClick={() => setExpanded((value) => !value)}
         >
           {expanded ? "Show less" : item.summary ? "What I worked on" : "More"}
-          <span aria-hidden="true">{expanded ? " ↑" : " ↓"}</span>
+          <span aria-hidden="true">{expanded ? "↑" : "↓"}</span>
         </button>
       )}
 
-      {item.note && <p className={styles.note}>↪ {item.note}</p>}
+      {item.tags && (
+        <ul className={styles.tags} aria-label="Tools">
+          {item.tags.map((tag) => (
+            <li key={tag} className="chip">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
 
+      {item.note && <p className={styles.note}>↪ {item.note}</p>}
     </article>
   );
 }
 
 export function Experience() {
   return (
-    <section className="section" id="experience" aria-labelledby="experience-title">
+    <section className={`section ${styles.section}`} id="experience" aria-labelledby="experience-title">
       <div className="page">
-        <Reveal className="section-head">
+        <Reveal as="header" className="section-head">
+          <p className="eyebrow">
+            <b>02</b>Experience
+          </p>
           <h2 id="experience-title" className="section-title">
-            where i&apos;ve <span className="gradient-text">worked</span>
+            Where I&apos;ve <em className="serif">worked</em>
           </h2>
         </Reveal>
 
         <ol className={styles.timeline}>
-          {experience.map((item, index) => (
-            <Reveal
-              as="li"
-              key={`${item.organisation}-${item.start}`}
-              delay={index * 90}
-              className={styles.entry}
-            >
-              <div className={styles.when}>
-                <span>{item.start}</span>
-                <span aria-hidden="true">→</span>
-                <span>{item.end}</span>
-              </div>
+          {experience.map((item) => (
+            <Reveal as="li" key={`${item.organisation}-${item.start}`} className={styles.entry}>
+              <p className={styles.when}>
+                {item.start} — {item.end}
+              </p>
               <Role item={item} />
             </Reveal>
           ))}
 
           <Reveal as="li" className={styles.entry}>
-            <div className={styles.when}>
-              <span>{profile.education.years}</span>
-            </div>
-            <article className={styles.card}>
-              <header className={styles.cardHead}>
+            <p className={styles.when}>{profile.education.years}</p>
+            <article className={styles.role}>
+              <header className={styles.head}>
                 <span className={`${styles.logo} ${styles.cap}`} aria-hidden="true">
-                  🎓
+                  <GraduationCap />
                 </span>
                 <div className={styles.titles}>
                   <h3>{profile.education.school}</h3>
-                  <p className={styles.team}>
+                  <p>
                     {profile.education.degree} · {profile.education.grade}
                   </p>
                 </div>

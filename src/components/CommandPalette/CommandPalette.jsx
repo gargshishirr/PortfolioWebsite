@@ -194,7 +194,7 @@ export function CommandPalette({ open, onClose }) {
                   data-index={index}
                   data-group={heading || undefined}
                   className={styles.option}
-                  style={item.accent ? { "--accent": item.accent } : undefined}
+                  style={item.accent ? { "--item": item.accent } : undefined}
                   onPointerMove={() => setActive(index)}
                   onClick={() => execute(item)}
                 >

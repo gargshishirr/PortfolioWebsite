@@ -1,0 +1,349 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.item {
+  display: flex;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.4s var(--ease-out),
+    translate 0.4s var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+  translate: 0 -3px;
+}
+
+.card:has(.open:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* The screenshot sits in a softly tinted panel and peeks up from the bottom edge. */
+.media {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 16 / 10;
+  padding: 28px 28px 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  background:
+    radial-gradient(110% 80% at 50% 0%, color-mix(in srgb, var(--cat) 15%, transparent), transparent 72%),
+    var(--surface-2);
+}
+
+.shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.45);
+  transform: translateY(8px);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.card:hover .shot {
+  transform: translateY(0);
+}
+
+.phones {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 14px;
+  height: 100%;
+}
+
+.phones img {
+  height: 92%;
+  width: auto;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.45);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.phones img:nth-child(2) {
+  height: 100%;
+}
+
+.card:hover .phones img:nth-child(1) {
+  transform: translateY(-6px);
+}
+
+.card:hover .phones img:nth-child(3) {
+  transform: translateY(-6px);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px 26px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--subtle);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--live);
+}
+
+.live::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+/* The title's button covers the whole card, so the card is one big click target. */
+.open {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+}
+
+.open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.open:focus-visible {
+  outline: none;
+}
+
+.arrow {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  color: var(--subtle);
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s;
+}
+
+.card:hover .arrow {
+  color: var(--accent-text);
+  transform: translateX(4px);
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+/* The first card spans the row, with the screenshot beside the words. */
+@media (min-width: 900px) {
+  .wideItem {
+    grid-column: 1 / -1;
+  }
+
+  .wide {
+    flex-direction: row-reverse;
+  }
+
+  .wide .media {
+    flex: 1.45;
+    aspect-ratio: auto;
+    min-height: 380px;
+    padding: 40px 40px 0;
+    border-bottom: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .wide .body {
+    flex: 1;
+    justify-content: center;
+    gap: 14px;
+    padding: 40px;
+  }
+
+  .wide .title {
+    font-size: 32px;
+  }
+
+  .wide .tagline {
+    font-size: 17px;
+  }
+
+  .wide .tags {
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .media {
+    padding: 20px 20px 0;
+  }
+
+  .body {
+    padding: 20px 20px 22px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}
+
+/* More projects: a plain list. */
+
+.more {
+  margin-top: clamp(56px, 8vw, 88px);
+}
+
+.moreTitle {
+  margin-bottom: 14px;
+  color: var(--subtle);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.moreList {
+  border-top: 1px solid var(--line);
+}
+
+.moreList li {
+  border-bottom: 1px solid var(--line);
+}
+
+.moreRow {
+  display: grid;
+  grid-template-columns: 56px minmax(180px, 1fr) minmax(0, 2fr) 20px;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 18px 8px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  text-align: left;
+  transition:
+    background-color 0.2s,
+    padding 0.3s var(--ease-out);
+}
+
+.moreRow:hover {
+  padding-inline: 16px;
+  background: var(--surface-2);
+}
+
+.moreYear {
+  color: var(--subtle);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.moreName {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.moreTagline {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.moreArrow {
+  width: 18px;
+  height: 18px;
+  justify-self: end;
+  color: var(--subtle);
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s;
+}
+
+.moreRow:hover .moreArrow {
+  color: var(--accent-text);
+  transform: translateX(4px);
+}
+
+@media (max-width: 720px) {
+  .moreRow {
+    grid-template-columns: minmax(0, 1fr) 20px;
+    gap: 2px 12px;
+  }
+
+  .moreYear,
+  .moreName,
+  .moreTagline {
+    grid-column: 1;
+  }
+
+  .moreArrow {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}

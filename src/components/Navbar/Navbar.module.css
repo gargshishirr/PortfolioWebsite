@@ -1,160 +1,190 @@
 .header {
   position: fixed;
   inset: 0 0 auto;
-  z-index: 50;
-  height: var(--nav-height);
+  z-index: 40;
   border-bottom: 1px solid transparent;
   transition:
-    background 0.3s,
+    background-color 0.3s,
     border-color 0.3s,
     backdrop-filter 0.3s;
 }
 
 .scrolled {
-  background: rgba(238, 242, 239, 0.78);
-  border-color: var(--line);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--line);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 20px;
-  height: 100%;
+  gap: 24px;
+  height: var(--nav-height);
 }
 
 .brand {
-  font-family: var(--font-display);
-  font-size: 24px;
-  line-height: 1;
-  color: var(--plum);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-right: auto;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
   text-decoration: none;
-  letter-spacing: -0.01em;
 }
 
-.brand em {
-  font-style: italic;
-  color: var(--plum-soft);
+.brandDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .links {
   display: flex;
   align-items: center;
-  gap: 2px;
-  margin-left: auto;
+  gap: 4px;
 }
 
 .links a {
-  position: relative;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px 12px;
   border-radius: 999px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
   text-decoration: none;
   transition:
     color 0.2s,
-    background 0.2s;
+    background-color 0.2s;
 }
 
-.links a:hover {
-  color: var(--plum);
-  background: rgba(255, 255, 255, 0.6);
+.links a:hover,
+.links a.active {
+  color: var(--text);
 }
 
 .links a.active {
-  color: var(--plum);
+  background: var(--surface-2);
 }
 
-.links a.active::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--koi);
-  transform: translateX(-50%);
+.links a.resume {
+  margin-left: 8px;
+  padding-inline: 16px;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+}
+
+.links a.resume:hover {
+  border-color: var(--text);
+}
+
+.resume svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--muted);
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.iconButton:hover {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.iconButton svg {
+  width: 18px;
+  height: 18px;
 }
 
 .menuButton {
   display: none;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.6);
 }
 
 .burger {
   display: grid;
-  gap: 6px;
-  width: 18px;
-  margin: auto;
+  gap: 5px;
+  width: 16px;
 }
 
 .burger span {
-  height: 1.6px;
+  height: 1.5px;
   border-radius: 2px;
-  background: var(--plum);
+  background: currentColor;
   transition: transform 0.3s var(--ease-out);
 }
 
 .burger[data-open="true"] span:first-child {
-  transform: translateY(3.8px) rotate(45deg);
+  transform: translateY(3.25px) rotate(45deg);
 }
 
 .burger[data-open="true"] span:last-child {
-  transform: translateY(-3.8px) rotate(-45deg);
+  transform: translateY(-3.25px) rotate(-45deg);
 }
 
 @media (max-width: 760px) {
   .menuButton {
-    display: block;
-    margin-left: auto;
+    display: grid;
   }
 
   .links {
     position: absolute;
-    top: calc(var(--nav-height) - 4px);
-    left: 16px;
-    right: 16px;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
     flex-direction: column;
     align-items: stretch;
     gap: 2px;
-    padding: 10px;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: rgba(251, 250, 246, 0.97);
+    padding: 10px 20px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
     box-shadow: var(--shadow);
-    opacity: 0;
     visibility: hidden;
+    opacity: 0;
     transform: translateY(-8px);
     transition:
-      opacity 0.25s,
+      opacity 0.25s var(--ease-out),
       transform 0.25s var(--ease-out),
-      visibility 0.25s;
+      visibility 0s linear 0.25s;
   }
 
   .links.open {
-    opacity: 1;
     visibility: visible;
+    opacity: 1;
     transform: none;
+    transition-delay: 0s;
   }
 
   .links a {
-    padding: 14px 16px;
+    display: flex;
+    padding: 12px;
     border-radius: 12px;
     font-size: 17px;
   }
 
-  .links a.active::after {
-    left: auto;
-    right: 16px;
-    top: 50%;
-    bottom: auto;
-    transform: translateY(-50%);
+  .links a.resume {
+    justify-content: center;
+    margin: 10px 0 0;
   }
 }
