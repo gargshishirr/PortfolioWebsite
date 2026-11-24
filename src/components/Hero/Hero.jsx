@@ -12,8 +12,10 @@ export function Hero() {
         <div className={styles.copy}>
           <p className={styles.status}>
             <span className={styles.pulse} aria-hidden="true" />
-            {profile.role} at {profile.company}
-            <span className={styles.team}> · {profile.team}</span>
+            <span>
+              {profile.role} at {profile.company}
+              <span className={styles.team}> · {profile.team}</span>
+            </span>
           </p>
 
           <h1 id="hero-title" className={styles.title}>
