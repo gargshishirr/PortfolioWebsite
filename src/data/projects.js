@@ -37,30 +37,10 @@ import wanderlyTrips from "../assets/projects/wanderly-trips.webp";
 const GITHUB = "https://github.com/gargshishirr";
 
 export const categories = [
-  {
-    id: "backend",
-    label: "Backend & Tools",
-    constellation: "the engine",
-    color: "var(--teal)",
-  },
-  {
-    id: "products",
-    label: "Full-stack Products",
-    constellation: "the arena",
-    color: "var(--koi)",
-  },
-  {
-    id: "mobile",
-    label: "Mobile & Frontend",
-    constellation: "the garden",
-    color: "var(--lily)",
-  },
-  {
-    id: "algorithms",
-    label: "Algorithms & ML",
-    constellation: "the lab",
-    color: "var(--lotus)",
-  },
+  { id: "backend", label: "Backend & Tools", color: "var(--c-backend)" },
+  { id: "products", label: "Full-stack Products", color: "var(--c-products)" },
+  { id: "mobile", label: "Mobile & Frontend", color: "var(--c-mobile)" },
+  { id: "algorithms", label: "Algorithms & ML", color: "var(--c-algorithms)" },
 ];
 
 export const projects = [

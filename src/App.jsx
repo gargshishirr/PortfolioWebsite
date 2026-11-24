@@ -2,15 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { About } from "./components/About/About";
 import { CommandPalette } from "./components/CommandPalette/CommandPalette";
-import { Constellation } from "./components/Constellation/Constellation";
 import { Contact } from "./components/Contact/Contact";
 import { Experience } from "./components/Experience/Experience";
-import { Featured } from "./components/Featured/Featured";
 import { Hero } from "./components/Hero/Hero";
 import { Navbar } from "./components/Navbar/Navbar";
 import { ProjectDrawer } from "./components/ProjectDrawer/ProjectDrawer";
 import { Terminal } from "./components/Terminal/Terminal";
-import { UIContext, scrollToSection } from "./context/ui";
+import { Work } from "./components/Work/Work";
+import { UIContext } from "./context/ui";
 import { projectBySlug } from "./data/projects";
 
 const readProjectFromUrl = () => {
@@ -33,7 +32,6 @@ function App() {
   const [activeSlug, setActiveSlug] = useState(readProjectFromUrl);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
-  const [filter, setFilter] = useState({ type: "all", value: null });
 
   const openProject = useCallback((slug) => {
     if (!projectBySlug[slug]) return;
@@ -46,13 +44,6 @@ function App() {
   const closeProject = useCallback(() => {
     setActiveSlug(null);
     writeProjectToUrl(null);
-  }, []);
-
-  const focusSkill = useCallback((skill) => {
-    setActiveSlug(null);
-    writeProjectToUrl(null);
-    setFilter({ type: "skill", value: skill });
-    requestAnimationFrame(() => scrollToSection("projects"));
   }, []);
 
   useEffect(() => {
@@ -82,9 +73,6 @@ function App() {
   const ui = useMemo(
     () => ({
       openProject,
-      focusSkill,
-      filter,
-      setFilter,
       openPalette: () => {
         setTerminalOpen(false);
         setPaletteOpen(true);
@@ -94,7 +82,7 @@ function App() {
         setTerminalOpen(true);
       },
     }),
-    [openProject, focusSkill, filter],
+    [openProject],
   );
 
   return (
@@ -105,10 +93,7 @@ function App() {
       <Navbar />
       <main id="main">
         <Hero />
-        <section className="section" id="work" aria-labelledby="work-title">
-          <Featured />
-          <Constellation />
-        </section>
+        <Work />
         <Experience />
         <About />
         <Contact />

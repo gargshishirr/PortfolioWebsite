@@ -1,6 +1,6 @@
 # Shishir Garg — portfolio
 
-Personal site with projects mapped as an interactive constellation: **https://gargshishirr.github.io/PortfolioWebsite/**
+Personal site: who I am, the side projects I build, where I have worked and how to reach me: **https://gargshishirr.github.io/PortfolioWebsite/**
 
 How to change, publish and maintain it: **[GUIDE.md](GUIDE.md)**.
 

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-import { useUI } from "../../context/ui";
 import { profile } from "../../data/profile";
 import { categoryById, projectBySlug, projects } from "../../data/projects";
+import { ArrowUpRight, Mail } from "../common/Icons";
 import { ProjectArt } from "../common/ProjectArt";
 import styles from "./ProjectDrawer.module.css";
 
@@ -39,7 +39,6 @@ function Gallery({ project }) {
 }
 
 export function ProjectDrawer({ slug, onClose, onNavigate }) {
-  const { focusSkill } = useUI();
   const dialogRef = useRef(null);
   const scrollRef = useRef(null);
   const project = slug ? projectBySlug[slug] : null;
@@ -81,24 +80,24 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
       }}
       onClick={(event) => event.target === event.currentTarget && onClose()}
       onKeyDown={onKeyDown}
-      style={category ? { "--accent": category.color } : undefined}
+      style={category ? { "--cat": category.color } : undefined}
     >
       {project && (
         <div className={styles.panel}>
           <header className={styles.header}>
             <p className={styles.crumbs}>
               <span className={styles.dot} aria-hidden="true" />
-              {category.constellation} · {category.label}
+              {category.label} · {project.year}
             </p>
             <div className={styles.headerActions}>
               <button type="button" onClick={() => onNavigate(previous.slug)} aria-label={`Previous project: ${previous.title}`}>
-                ←
+                <span aria-hidden="true">←</span>
               </button>
               <button type="button" onClick={() => onNavigate(next.slug)} aria-label={`Next project: ${next.title}`}>
-                →
+                <span aria-hidden="true">→</span>
               </button>
               <button type="button" className={styles.close} onClick={onClose} aria-label="Close project details" data-autofocus>
-                ✕
+                <span aria-hidden="true">✕</span>
               </button>
             </div>
           </header>
@@ -106,7 +105,6 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
           <div ref={scrollRef} className={styles.scroll}>
             <div className={styles.titleBlock}>
               <p className={styles.meta}>
-                <span>{project.year}</span>
                 <span>{project.visibility === "public" ? "Open source" : "Private repository"}</span>
                 <span>
                   {index + 1} / {projects.length}
@@ -120,12 +118,14 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
               <div className={styles.links}>
                 {project.links.live && (
                   <a className="button button-primary" href={project.links.live} target="_blank" rel="noreferrer">
-                    Live demo ↗
+                    Live demo
+                    <ArrowUpRight />
                   </a>
                 )}
                 {project.links.source && (
                   <a className="button" href={project.links.source} target="_blank" rel="noreferrer">
-                    View source ↗
+                    View source
+                    <ArrowUpRight />
                   </a>
                 )}
                 {project.visibility === "private" && (
@@ -133,7 +133,8 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
                     className="button"
                     href={`mailto:${profile.email}?subject=${encodeURIComponent(`Walkthrough of ${project.title}`)}`}
                   >
-                    Ask for a walkthrough ✉
+                    <Mail />
+                    Ask for a walkthrough
                   </a>
                 )}
               </div>
@@ -170,15 +171,8 @@ export function ProjectDrawer({ slug, onClose, onNavigate }) {
               <h3 id="dossier-stack">Built with</h3>
               <ul className={styles.stack}>
                 {project.stack.map((item) => (
-                  <li key={item}>
-                    <button
-                      type="button"
-                      className="chip"
-                      onClick={() => focusSkill(item)}
-                      title={`Show every project built with ${item}`}
-                    >
-                      {item}
-                    </button>
+                  <li key={item} className="chip">
+                    {item}
                   </li>
                 ))}
               </ul>

@@ -1,51 +1,81 @@
+import { scrollToSection } from "../../context/ui";
 import { profile } from "../../data/profile";
-import { Pond } from "../Pond/Pond";
+import { ArrowDown, ArrowUpRight, Code, GitHub, LinkedIn, Mail } from "../common/Icons";
 import styles from "./Hero.module.css";
 
-const github = profile.socials.find((social) => social.label === "GitHub");
-const linkedin = profile.socials.find((social) => social.label === "LinkedIn");
-
-const PILLS = [
-  { label: "github", href: github.href, spot: "github" },
-  { label: "linkedin", href: linkedin.href, spot: "linkedin" },
-  { label: "say hi", href: `mailto:${profile.email}`, spot: "hi" },
-];
+const ICONS = { GitHub, LinkedIn, LeetCode: Code };
 
 export function Hero() {
   return (
     <section className={styles.hero} id="top" aria-labelledby="hero-title">
-      <Pond />
+      <div className={`page ${styles.inner}`}>
+        <div className={styles.copy}>
+          <p className={styles.status}>
+            <span className={styles.pulse} aria-hidden="true" />
+            {profile.role} at {profile.company}
+            <span className={styles.team}> · {profile.team}</span>
+          </p>
 
-      <div className={styles.content}>
-        <h1 id="hero-title" className={styles.title}>
-          hi, i&apos;m <em>shishir</em>
-        </h1>
-        <p className={styles.subtitle}>
-          software engineer building large-scale distributed systems
-        </p>
-        <p className={styles.status}>
-          <span className={styles.dot} aria-hidden="true" />
-          currently at microsoft
-        </p>
-      </div>
+          <h1 id="hero-title" className={styles.title}>
+            <span className={styles.hello}>Hi, I&apos;m {profile.firstName}.</span> I build the{" "}
+            <em className="serif">invisible parts</em> of software.
+          </h1>
 
-      <ul className={styles.pills}>
-        {PILLS.map((pill) => (
-          <li key={pill.label} className={styles[pill.spot]}>
+          <p className={styles.lead}>{profile.intro}</p>
+
+          <div className={styles.actions}>
             <a
-              className={styles.pill}
-              href={pill.href}
-              {...(pill.href.startsWith("mailto:") ? {} : { target: "_blank", rel: "noreferrer" })}
+              className="button button-primary"
+              href="#work"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection("work");
+              }}
             >
-              {pill.label} <span aria-hidden="true">↗</span>
+              See my work
+              <ArrowDown />
             </a>
-          </li>
-        ))}
-      </ul>
+            <a className="button" href={profile.resume} target="_blank" rel="noreferrer">
+              Résumé
+              <ArrowUpRight />
+            </a>
+            <ul className={styles.socials} aria-label="Find me elsewhere">
+              {profile.socials.map((social) => {
+                const Icon = ICONS[social.label];
+                return (
+                  <li key={social.label}>
+                    <a
+                      className="icon-button"
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${social.label}: ${social.handle}`}
+                      title={social.label}
+                    >
+                      <Icon />
+                    </a>
+                  </li>
+                );
+              })}
+              <li>
+                <a className="icon-button" href={`mailto:${profile.email}`} aria-label={`Email ${profile.email}`} title="Email">
+                  <Mail />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-      <p className={styles.hint} aria-hidden="true">
-        tap the water
-      </p>
+        <figure className={styles.portrait}>
+          <img
+            src={profile.photo}
+            alt="Shishir smiling in a beanie on a snowy mountain ridge"
+            width="640"
+            height="618"
+            decoding="async"
+          />
+        </figure>
+      </div>
     </section>
   );
 }

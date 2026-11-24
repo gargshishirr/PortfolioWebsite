@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useMediaQuery(query) {
   const [matches, setMatches] = useState(
@@ -79,4 +79,33 @@ export function useActiveSection(ids) {
   }, [key]);
 
   return active;
+}
+
+const THEME_COLOR = { light: "#faf9f6", dark: "#0d0d0e" };
+
+// Light or dark: the visitor's choice (saved, and applied before paint by public/theme.js) or the device's.
+export function useTheme() {
+  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+  const [choice, setChoice] = useState(() => document.documentElement.getAttribute("data-theme"));
+  const theme = choice || (prefersDark ? "dark" : "light");
+
+  useEffect(() => {
+    if (!choice) return;
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((meta) => meta.setAttribute("content", THEME_COLOR[choice]));
+  }, [choice]);
+
+  const toggle = useCallback(() => {
+    const next = theme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Storage can be blocked; the choice then lasts until the page is closed.
+    }
+    setChoice(next);
+  }, [theme]);
+
+  return { theme, toggle };
 }

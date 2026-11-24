@@ -196,7 +196,7 @@ export function run(raw, actions) {
       const art = ["    ✦     ", "  ✦   ✦   ", " ✦  SG  ✦ ", "  ✦   ✦   ", "    ✦     ", "          ", "          "];
       const info = [
         [seg("guest", "mint"), "@", seg("shishir.sh", "cyan")],
-        [seg("OS        ", "amber"), "Constellation (React + Vite)"],
+        [seg("OS        ", "amber"), "Portfolio (React + Vite)"],
         [seg("Host      ", "amber"), `${profile.role} @ ${profile.company}`],
         [seg("Projects  ", "amber"), `${projects.length} (${live} live)`],
         [seg("Shell     ", "amber"), "C# · Java · TypeScript · Python · C++"],
