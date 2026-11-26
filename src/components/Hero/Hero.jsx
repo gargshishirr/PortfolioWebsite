@@ -71,9 +71,9 @@ export function Hero() {
         <figure className={styles.portrait}>
           <img
             src={profile.photo}
-            alt="Shishir smiling in a beanie on a snowy mountain ridge"
-            width="640"
-            height="618"
+            alt="Shishir smiling with his arms crossed on a mountaintop, with clouds and forested hills behind him"
+            width="800"
+            height="800"
             decoding="async"
           />
         </figure>
