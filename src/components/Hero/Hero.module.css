@@ -124,7 +124,7 @@
   margin-left: 4px;
 }
 
-/* The photo is already cut to an oval (transparent corners), so the ring and shadow follow its shape. */
+/* A square photo, shown as a circle inside a thin ring. */
 .portrait {
   position: relative;
   justify-self: center;
@@ -155,7 +155,10 @@
 .portrait img {
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.22));
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 28px 60px -24px rgba(0, 0, 0, 0.45);
 }
 
 @keyframes rise {
@@ -203,7 +206,7 @@
   }
 
   .portrait img {
-    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.2));
+    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.4);
   }
 
   .socials {
